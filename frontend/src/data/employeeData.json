@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Aarav Sharma",
+    "joiningDate": "2026-05-12",
+    "status": "Not Started"
+  },
+  {
+    "id": 2,
+    "name": "Priya Verma",
+    "joiningDate": "2026-05-15",
+    "status": "In Progress"
+  },
+  {
+    "id": 3,
+    "name": "Rohan Gupta",
+    "joiningDate": "2026-05-18",
+    "status": "Completed"
+  },
+  {
+    "id": 4,
+    "name": "Sneha Kapoor",
+    "joiningDate": "2026-05-20",
+    "status": "In Progress"
+  },
+  {
+    "id": 5,
+    "name": "Aditya Singh",
+    "joiningDate": "2026-05-22",
+    "status": "Not Started"
+  },
+  {
+    "id": 6,
+    "name": "Neha Joshi",
+    "joiningDate": "2026-05-25",
+    "status": "Completed"
+  },
+  {
+    "id": 7,
+    "name": "Karan Malhotra",
+    "joiningDate": "2026-05-26",
+    "status": "In Progress"
+  },
+  {
+    "id": 8,
+    "name": "Ananya Mehta",
+    "joiningDate": "2026-05-27",
+    "status": "Completed"
+  }
+]

@@ -38,7 +38,7 @@ const Login = () => {
 
         {/* Logo visible everywhere */}
         <div className="relative z-10 w-60 md:w-40 flex justify-center justify-self-center items-center">
-          <img src="/logo.png" alt="logo" className="h-auto w-full object-contain" />
+          <img src="/logo.png" alt="logo" className="h-auto w-full object-contain " />
         </div>
 
         {/* Text only on desktop */}
