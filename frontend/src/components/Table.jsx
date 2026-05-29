@@ -1,44 +1,54 @@
-const Table = ({ columns, data , onRowClick }) => {
+const Table = ({ columns, data , }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-
-      <table className="w-full">
-
-        {/* Table Header */}
-        <thead className="bg-slate-100">
-          <tr>
-            {columns.map((col) => (
-              <th
-                key={col.accessor}
-                className="text-left px-6 py-4 text-sm font-semibold text-slate-700"
-              >
-                {col.header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-
-        {/* Table Body */}
-        <tbody>
-          {data.map((item) => (
-            <tr
-              key={item.id}
-              className="border-t border-slate-200 hover:bg-slate-50"
-              onClick={() => onRowClick(item)}
-            >
-              {columns.map((col) => (
-                <td
-                  key={col.accessor}
-                  className="px-6 py-4 text-sm text-slate-600"
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mt-4 mx-6 cursor-pointer">
+      
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[700px]">
+          
+          <thead className="bg-[#1D293D]">
+            <tr>
+              {columns.map((column) => (
+                <th
+                  key={column.accessor}
+                  className="px-6 py-4 text-left text-sm font-semibold text-white whitespace-nowrap"
                 >
-                  {item[col.accessor]}
-                </td>
+                  {column.header}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
+          </thead>
 
-      </table>
+          <tbody>
+            {data.length > 0 ? (
+              data.map((row) => (
+                <tr
+                  key={row.id}
+                  className="border-t border-slate-200 hover:bg-slate-50 transition"
+                >
+                  {columns.map((column) => (
+                    <td
+                      key={column.accessor}
+                      className="px-6 py-4 text-sm text-black whitespace-nowrap"
+                    >
+                      {row[column.accessor]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="text-center py-8 text-slate-500"
+                >
+                  No Employees Found
+                </td>
+              </tr>
+            )}
+          </tbody>
+
+        </table>
+      </div>
 
     </div>
   );

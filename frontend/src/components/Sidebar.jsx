@@ -57,7 +57,7 @@ const Sidebar = () => {
         <div className="w-full flex flex-col h-full justify-between">
           {/* Logo + Close */}
           <div className="flex items-center justify-between md:justify-center md:items-center border-b border-slate-700">
-            <img src="/logo-1.png" alt="logo" className="w-28 h-auto " />
+            <img src="/logo-1.png" alt="logo" className="w-26 h-auto " />
 
             <button
               onClick={() => setOpen(false)}

@@ -1,46 +1,73 @@
 import { useState } from "react";
-import employeeData from "../data/employeeData.json";
+// import EmployeeModal from "../components/EmployeeModal";
 import Table from "../components/Table";
-import EmployeeModal from "../components/EmployeeModal";
+import employeeData from "../data/employeeData.json";
+import Button from "../components/Button";
+import SearchBar from "../components/SearchBar";
+import EmployeeForm from "../components/EmployeeFrom";
 
 const Employee = () => {
 
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
-
   const columns = [
-    {
-      header: "ID",
-      accessor: "id",
-    },
-    {
-      header: "Employee Name",
-      accessor: "name",
-    },
-    {
-      header: "Joining Date",
-      accessor: "joiningDate",
-    },
-    {
-      header: "Status",
-      accessor: "status",
-    },
-  ];
+  {
+    header: "Employee Name",
+    accessor: "fullName",
+  },
+  {
+    header: "Email",
+    accessor: "email",
+  },
+  {
+    header: "Phone",
+    accessor: "phone",
+  },
+  {
+    header: "Joining Date",
+    accessor: "dateOfJoining",
+  },
+  {
+    header: "Status",
+    accessor: "status",
+  },
+];
+
+  const [employees, setEmployees] = useState(employeeData);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const handleAddEmployee = (newEmployee) => {
+    const updatedEmployees = [...employees, newEmployee];
+    setEmployees(updatedEmployees);
+    const emp = localStorage.setItem(
+      "employees",
+      JSON.stringify(updatedEmployees),
+    );
+
+    console.log(emp);
+  };
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen overflow-y-auto">
+      <div className="flex justify-between   px-8">
+        <div className="">
+          <h1 className="font-semibold">Employees</h1>
+          <p className="text-slate-600 text-sm">{employeeData.length} active onboardees</p>
+        </div>
+        <div>
+          <Button name="Add Employee" onClick={() => setIsFormOpen(true)} />
+        </div>
+      </div>
 
-      <Table
-        columns={columns}
-        data={employeeData}
-        onRowClick={setSelectedEmployee}
-      />
+      <div className="rounded-2xl bg-slate-50 mt-4 px-6">
+        <SearchBar />
+      </div>
+      {isFormOpen && (
+        <EmployeeForm
+          onClose={() => setIsFormOpen(false)}
+          onAddEmployee={handleAddEmployee}
+        />
+      )}
 
-      {/* Modal */}
-      <EmployeeModal
-        employee={selectedEmployee}
-        onClose={() => setSelectedEmployee(null)}
-      />
-
+      <Table columns={columns} data={employees} />
     </div>
   );
 };

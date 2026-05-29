@@ -70,7 +70,7 @@ const LoginForm = ({
       <button
         className="mt-2 flex w-full justify-center rounded-xl bg-slate-900 px-8 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
         type="submit"
-        disabled={loading}
+        disabled={loading} 
       >
         {loading ? "Loading..." : "Login"}
       </button>
