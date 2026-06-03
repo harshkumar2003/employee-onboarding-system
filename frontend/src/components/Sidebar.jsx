@@ -1,4 +1,20 @@
-import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  Avatar,
+  Box,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  Chip,
+} from "@mui/material";
 import {
   Menu,
   X,
@@ -9,12 +25,12 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const navigate = useNavigate();
   const username = "Harsh Kumar";
-  const [open, setOpen] = useState(false);
 
   const navItems = [
     { name: "Dashboard", path: "/dashboard", Icon: LayoutDashboard },
@@ -24,93 +40,170 @@ const Sidebar = () => {
     { name: "Settings", path: "/dashboard/settings", Icon: Settings },
   ];
 
-  const handleClick = ()=>{
-
+  const handleLogout = () => {
     navigate("/");
+  };
 
-  }
+  const drawerContent = (
+    <Box
+      sx={{
+        width: 292,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "#0f172a",
+        color: "common.white",
+        backgroundImage:
+          "radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 24%), linear-gradient(180deg, #0f172a 0%, #0b1220 100%)",
+      }}
+    >
+      <Stack
+        spacing={1.5}
+        sx={{
+          px: 2.5,
+          py: 2.5,
+          borderBottom: "1px solid",
+          borderColor: "rgba(148, 163, 184, 0.16)",
+        }}
+      >
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Box
+            component="img"
+            src="/logo-1.png"
+            alt="logo"
+            sx={{ width: 126, height: "auto", objectFit: "contain" }}
+          />
+
+          {!isDesktop && (
+            <IconButton onClick={onClose} sx={{ color: "common.white" }}>
+              <X />
+            </IconButton>
+          )}
+        </Stack>
+
+        <Chip
+          label="Onboarding Hub"
+          size="small"
+          sx={{
+            width: "fit-content",
+            bgcolor: "rgba(255,255,255,0.08)",
+            color: "rgba(255,255,255,0.86)",
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}
+        />
+      </Stack>
+
+      <List sx={{ flex: 1, px: 1.5, py: 2 }}>
+        {navItems.map((item) => {
+          const Icon = item.Icon;
+
+          return (
+            <ListItemButton
+              key={item.path}
+              component={NavLink}
+              to={item.path}
+              end={item.path === "/dashboard"}
+              onClick={onClose}
+              sx={{
+                mb: 1,
+                borderRadius: 3,
+                color: "rgba(226, 232, 240, 0.86)",
+                px: 1.75,
+                py: 1.25,
+                "&.active": {
+                  bgcolor: "rgba(37, 99, 235, 0.14)",
+                  color: "common.white",
+                  boxShadow: "inset 0 0 0 1px rgba(96, 165, 250, 0.18)",
+                },
+                "&:hover": {
+                  bgcolor: "rgba(148, 163, 184, 0.12)",
+                  color: "common.white",
+                },
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 40, color: "inherit" }}>
+                <Icon size={18} />
+              </ListItemIcon>
+              <ListItemText
+                primary={item.name}
+                primaryTypographyProps={{ fontSize: 14, fontWeight: 600 }}
+              />
+            </ListItemButton>
+          );
+        })}
+      </List>
+
+      <Divider sx={{ borderColor: "rgba(148, 163, 184, 0.2)" }} />
+
+      <Box sx={{ p: 2.25 }}>
+        <Stack direction="row" spacing={1.5} alignItems="center">
+          <Avatar sx={{ bgcolor: "#2563eb", fontWeight: 700, boxShadow: "0 8px 18px rgba(37, 99, 235, 0.3)" }}>
+            {username.charAt(0)}
+          </Avatar>
+
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ flex: 1 }}>
+            <Box>
+              <Typography variant="body2" fontWeight={700}>
+                {username}
+              </Typography>
+              <Typography variant="caption" sx={{ color: "rgba(226, 232, 240, 0.68)" }}>
+                HR Administrator
+              </Typography>
+            </Box>
+
+            <IconButton
+              onClick={handleLogout}
+              sx={{
+                color: "#fecaca",
+                bgcolor: "rgba(248, 113, 113, 0.12)",
+                "&:hover": { bgcolor: "rgba(248, 113, 113, 0.2)" },
+              }}
+            >
+              <LogOut />
+            </IconButton>
+          </Stack>
+        </Stack>
+      </Box>
+    </Box>
+  );
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 bg-[#0F172A] text-white p-2 rounded-lg"
-      >
-        <Menu size={24} />
-      </button>
-
-      {/* Overlay */}
-      {open && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={() => setOpen(false)}
-        />
+      {!isDesktop && (
+        <IconButton
+          onClick={onMenuClick}
+          sx={{
+            position: "fixed",
+            top: 16,
+            left: 16,
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            bgcolor: "#0f172a",
+            color: "common.white",
+            boxShadow: "0 12px 28px rgba(15, 23, 42, 0.2)",
+            "&:hover": { bgcolor: "#1e293b" },
+          }}
+        >
+          <Menu />
+        </IconButton>
       )}
 
-      {/* Sidebar */}
-      <div
-        className={`fixed top-0 left-0 h-screen w-64 bg-[#0F172A] text-white z-50 transform transition-transform duration-300
-        ${open ? "translate-x-0" : "-translate-x-full"}
-        md:translate-x-0 md:static md:flex`}
+      <Drawer
+        variant={isDesktop ? "permanent" : "temporary"}
+        open={isDesktop ? true : mobileOpen}
+        onClose={onClose}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          "& .MuiDrawer-paper": {
+            width: 292,
+            boxSizing: "border-box",
+            borderRight: "none",
+            bgcolor: "#0f172a",
+            boxShadow: "14px 0 36px rgba(15, 23, 42, 0.16)",
+          },
+        }}
       >
-        <div className="w-full flex flex-col h-full justify-between">
-          {/* Logo + Close */}
-          <div className="flex items-center justify-between md:justify-center md:items-center border-b border-slate-700">
-            <img src="/logo-1.png" alt="logo" className="w-26 h-auto " />
-
-            <button
-              onClick={() => setOpen(false)}
-              className="md:hidden pr-4 flex items-center"
-            >
-              <X size={24} />
-            </button>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex flex-col gap-2 p-4 flex-1">
-            {navItems.map((item) => {
-              const Icon = item.Icon;
-
-              return (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  end={item.path === "/dashboard"}
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `text-sm flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
-                    ${
-                      isActive
-                        ? "bg-[#122143] text-white"
-                        : "text-slate-300 hover:bg-slate-800 hover:text-white"
-                    }`
-                  }
-                >
-                  <Icon size={20} />
-
-                  <span className="font-medium">{item.name}</span>
-                </NavLink>
-              );
-            })}
-          </div>
-
-          <div className="border-t border-slate-700 p-4">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
-                {username.charAt(0)}
-              </div>
-
-              <div className="flex justify-evenly gap-8 items-center">
-                <h2 className="text-sm font-semibold text-white items-center justify-center justify-self-center">{username}</h2>
-                <button className="items-center cursor-pointer border-0 bg-red-600 rounded-4xl p-2" onClick={handleClick}>
-                    <LogOut size={18}/>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        {drawerContent}
+      </Drawer>
     </>
   );
 };

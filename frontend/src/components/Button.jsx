@@ -1,10 +1,31 @@
-const Button = ({name , className ="",onClick})=>{
-    return(
-        <>
-            <button onClick={onClick} className={`cursor-pointer mt-2 flex justify-center rounded-xl bg-slate-900 px-8 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70 ${className}`}>
-                {name}
-            </button>
-        </>
-    );
+import { Button as MuiButton } from "@mui/material";
+
+const Button = ({ name, className = "", onClick, type = "button", disabled = false }) => {
+  return (
+    <MuiButton
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+      variant="contained"
+      color="secondary"
+      disableElevation
+      className={className}
+      sx={{
+        mt: 1,
+        px: 4,
+        py: 1.25,
+        borderRadius: 3,
+        fontWeight: 600,
+        textTransform: "none",
+        backgroundColor: "#0f172a",
+        "&:hover": {
+          backgroundColor: "#1e293b",
+        },
+      }}
+    >
+      {name}
+    </MuiButton>
+  );
 };
+
 export default Button;

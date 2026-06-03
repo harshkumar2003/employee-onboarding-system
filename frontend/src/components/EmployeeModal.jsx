@@ -1,74 +1,111 @@
-const EmployeeModal = ({ employee, onClose }) => {
+import {
+  Chip,
+  Dialog,
+  DialogContent,
+  IconButton,
+  Stack,
+  Typography,
+  Box,
+} from "@mui/material";
+import { X } from "lucide-react";
 
+const EmployeeModal = ({ employee, onClose }) => {
   if (!employee) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-
-      <div className="bg-white rounded-3xl w-[90%] max-w-md p-6 shadow-xl">
-
-        {/* Header */}
-        <div className="flex items-center justify-between border-b pb-4">
-          <h2 className="text-2xl font-bold text-slate-800">
+    <Dialog
+      open
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: 4,
+          overflow: "hidden",
+          boxShadow: "0 24px 80px rgba(15, 23, 42, 0.18)",
+        },
+      }}
+    >
+      <Box
+        sx={{
+          px: 3,
+          py: 2.25,
+          background: "linear-gradient(135deg, #0f172a 0%, #2563eb 100%)",
+          color: "common.white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box>
+          <Typography variant="overline" sx={{ letterSpacing: 1.2, opacity: 0.85 }}>
+            Employee Profile
+          </Typography>
+          <Typography variant="h5" fontWeight={800} sx={{ lineHeight: 1.1 }}>
             Employee Details
-          </h2>
+          </Typography>
+        </Box>
 
-          <button
-            onClick={onClose}
-            className="text-slate-500 hover:text-red-500"
-          >
-            ✕
-          </button>
-        </div>
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            color: "common.white",
+            bgcolor: "rgba(255,255,255,0.12)",
+            "&:hover": { bgcolor: "rgba(255,255,255,0.2)" },
+          }}
+        >
+          <X />
+        </IconButton>
+      </Box>
 
-        {/* Content */}
-        <div className="mt-6 space-y-4">
-
-          <div>
-            <p className="text-sm text-slate-500">
+      <DialogContent sx={{ px: 3, py: 3 }}>
+        <Stack spacing={2.25}>
+          <Stack spacing={0.5}>
+            <Typography variant="caption" color="text.secondary">
               Employee ID
-            </p>
-
-            <h3 className="text-lg font-semibold">
+            </Typography>
+            <Typography variant="h6" fontWeight={600}>
               #{employee.id}
-            </h3>
-          </div>
+            </Typography>
+          </Stack>
 
-          <div>
-            <p className="text-sm text-slate-500">
+          <Stack spacing={0.5}>
+            <Typography variant="caption" color="text.secondary">
               Name
-            </p>
-
-            <h3 className="text-lg font-semibold">
+            </Typography>
+            <Typography variant="h6" fontWeight={600}>
               {employee.name}
-            </h3>
-          </div>
+            </Typography>
+          </Stack>
 
-          <div>
-            <p className="text-sm text-slate-500">
+          <Stack spacing={0.5}>
+            <Typography variant="caption" color="text.secondary">
               Joining Date
-            </p>
-
-            <h3 className="text-lg font-semibold">
+            </Typography>
+            <Typography variant="h6" fontWeight={600}>
               {employee.joiningDate}
-            </h3>
-          </div>
+            </Typography>
+          </Stack>
 
-          <div>
-            <p className="text-sm text-slate-500">
+          <Stack spacing={0.5}>
+            <Typography variant="caption" color="text.secondary">
               Status
-            </p>
-
-            <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium">
-              {employee.status}
-            </span>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
+            </Typography>
+            <Chip
+              label={employee.status}
+              sx={{
+                width: "fit-content",
+                borderRadius: 999,
+                fontWeight: 700,
+                bgcolor: "rgba(37, 99, 235, 0.12)",
+                color: "#1d4ed8",
+              }}
+            />
+          </Stack>
+        </Stack>
+      </DialogContent>
+    </Dialog>
   );
 };
 

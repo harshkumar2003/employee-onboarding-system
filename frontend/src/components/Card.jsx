@@ -1,7 +1,7 @@
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import { Users, CircleAlert, CircleCheckBig, Activity } from "lucide-react";
 
 const Card = ({ title, value, change, description }) => {
-
   const iconMap = {
     "Total Employees": <Users size={18} />,
     "Pending Verifications": <CircleAlert size={18} />,
@@ -10,47 +10,77 @@ const Card = ({ title, value, change, description }) => {
   };
 
   const colorMap = {
-    "Total Employees": "text-blue-600 bg-blue-100",
-    "Pending Verifications": "text-orange-500 bg-orange-100",
-    "Completed Onboarding": "text-emerald-600 bg-emerald-100",
-    "Active Onboardees": "text-violet-600 bg-violet-100",
+    "Total Employees": { color: "#2563eb", bg: "#dbeafe" },
+    "Pending Verifications": { color: "#f97316", bg: "#ffedd5" },
+    "Completed Onboarding": { color: "#059669", bg: "#d1fae5" },
+    "Active Onboardees": { color: "#7c3aed", bg: "#ede9fe" },
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-3xl w-full px-4 py-3 shadow-sm hover:shadow-md transition-all duration-300 hover:border-slate-400">
-      
-      {/* Top Section */}
-      <div className="flex items-center justify-between">
-
-        {/* Icon */}
-        <div
-          className={`w-12 h-12 rounded-2xl flex items-center justify-center
-          ${colorMap[title]}`}
+    <Paper
+      elevation={0}
+      sx={{
+        width: "100%",
+        px: 2.25,
+        py: 2.25,
+        borderRadius: 4,
+        border: "1px solid",
+        borderColor: "rgba(148, 163, 184, 0.28)",
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(248,250,252,0.96) 100%)",
+        transition: "transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease",
+        "&:hover": {
+          boxShadow: "0 16px 40px rgba(15, 23, 42, 0.08)",
+          borderColor: "rgba(37, 99, 235, 0.22)",
+          transform: "translateY(-2px)",
+        },
+      }}
+    >
+      <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
+        <Box
+          sx={{
+            width: 52,
+            height: 52,
+            borderRadius: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: colorMap[title]?.color ?? "primary.main",
+            backgroundColor: colorMap[title]?.bg ?? "#eff6ff",
+            boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.4)",
+          }}
         >
           {iconMap[title]}
-        </div>
+        </Box>
 
-        {/* Change */}
-        <span className="bg-green-100 text-green-600 text-sm font-semibold px-3 py-1 rounded-full">
+        <Box
+          sx={{
+            px: 1.4,
+            py: 0.55,
+            borderRadius: 999,
+            bgcolor: "rgba(16, 185, 129, 0.12)",
+            color: "#047857",
+            fontSize: "0.8rem",
+            fontWeight: 600,
+            whiteSpace: "nowrap",
+          }}
+        >
           {change}
-        </span>
-      </div>
+        </Box>
+      </Stack>
 
-      {/* Value */}
-      <h1 className={`text-3xl font-bold mt-6 ${colorMap[title].split(" ")[0]}`}>
+      <Typography variant="h4" component="h1" sx={{ mt: 3, fontWeight: 800, color: colorMap[title]?.color }}>
         {value}
-      </h1>
+      </Typography>
 
-      {/* Title */}
-      <p className="text-l font-semibold text-slate-700 mt-2">
+      <Typography variant="subtitle1" sx={{ mt: 0.75, fontWeight: 700, color: "text.primary" }}>
         {title}
-      </p>
+      </Typography>
 
-      {/* Description */}
-      <p className="text-xs text-slate-400 mt-1">
+      <Typography variant="body2" sx={{ mt: 0.75, color: "text.secondary", lineHeight: 1.6 }}>
         {description}
-      </p>
-    </div>
+      </Typography>
+    </Paper>
   );
 };
 

@@ -1,8 +1,13 @@
-const DocReview = ()=>{
-    return (
-        <>
-            <h1>Doc Review Page</h1>
-        </>
-    );
+import { Paper, Typography } from "@mui/material";
+
+const DocReview = () => {
+  return (
+    <Paper elevation={0} sx={{ p: 3, borderRadius: 4, border: "1px solid", borderColor: "grey.200" }}>
+      <Typography variant="h5" fontWeight={700}>
+        Doc Review Page
+      </Typography>
+    </Paper>
+  );
 };
+
 export default DocReview;

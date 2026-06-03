@@ -1,5 +1,16 @@
-﻿import { Mail, Lock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+  InputAdornment,
+} from "@mui/material";
+import { Mail, Lock } from "lucide-react";
 
 const LoginForm = ({
   email,
@@ -11,70 +22,119 @@ const LoginForm = ({
   error,
 }) => {
   return (
-    <form onSubmit={handleLogin} className="space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
-        <h2 className="mt-1 text-sm text-slate-600">Access your onboarding portal</h2>
-      </div>
+    <Box component="form" onSubmit={handleLogin} sx={{ display: "grid", gap: 2.4 }}>
+      <Box>
+        <Typography variant="h4" fontWeight={800} color="text.primary" sx={{ letterSpacing: -0.5 }}>
+          Sign in
+        </Typography>
+        <Typography variant="body2" sx={{ mt: 0.75, lineHeight: 1.7 }} color="text.secondary">
+          Access your onboarding portal
+        </Typography>
+      </Box>
 
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold tracking-wide text-slate-600">EMAIL</label>
+      <Stack spacing={1}>
+        <Typography variant="caption" fontWeight={700} letterSpacing={1.2} color="text.secondary">
+          EMAIL
+        </Typography>
+        <TextField
+          type="email"
+          placeholder="you@company.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          fullWidth
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Mail size={18} />
+              </InputAdornment>
+            ),
+          }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 3,
+              backgroundColor: "#f8fafc",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                backgroundColor: "#ffffff",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#ffffff",
+              },
+            },
+          }}
+        />
+      </Stack>
 
-        <div className="relative">
-          <Mail
-            size={18}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-          />
+      <Stack spacing={1}>
+        <Typography variant="caption" fontWeight={700} letterSpacing={1.2} color="text.secondary">
+          PASSWORD
+        </Typography>
+        <TextField
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Lock size={18} />
+              </InputAdornment>
+            ),
+          }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 3,
+              backgroundColor: "#f8fafc",
+              transition: "all 0.2s ease",
+              "&:hover": {
+                backgroundColor: "#ffffff",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#ffffff",
+              },
+            },
+          }}
+        />
+      </Stack>
 
-          <input
-            className="w-full rounded-xl border border-gray-300 py-2.5 pl-12 pr-4 outline-none transition focus:border-[#3660F3] focus:ring-2 focus:ring-[#3660F3]/20"
-            type="email"
-            placeholder="you@company.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold tracking-wide text-slate-600">PASSWORD</label>
-
-        <div className="relative">
-          <Lock
-            size={18}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-          />
-
-          <input
-            className="w-full rounded-xl border border-gray-300 py-2.5 pl-12 pr-4 outline-none transition focus:border-[#3660F3] focus:ring-2 focus:ring-[#3660F3]/20"
-            type="password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between text-sm">
-        <div className="flex items-center gap-2 text-slate-600">
-          <input type="checkbox" id="remember" className="h-4 w-4 rounded border-gray-300" />
-          <label htmlFor="remember">Remember me</label>
-        </div>
-        <Link className="font-medium text-blue-600 hover:text-blue-700" to="/forgot">
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
+        <FormControlLabel
+          control={<Checkbox size="small" />}
+          label="Remember me"
+          sx={{ color: "text.secondary", "& .MuiFormControlLabel-label": { fontSize: 14 } }}
+        />
+        <Link component={RouterLink} to="/forgot" underline="hover" sx={{ fontWeight: 600 }}>
           Forgot Password?
         </Link>
-      </div>
+      </Box>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <Typography variant="body2" color="error">
+          {error}
+        </Typography>
+      )}
 
-      <button
-        className="mt-2 flex w-full justify-center rounded-xl bg-slate-900 px-8 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+      <Button
         type="submit"
-        disabled={loading} 
+        variant="contained"
+        disabled={loading}
+        sx={{
+          mt: 0.5,
+          py: 1.35,
+          borderRadius: 3,
+          fontWeight: 700,
+          textTransform: "none",
+          background: "linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%)",
+          boxShadow: "0 12px 24px rgba(37, 99, 235, 0.22)",
+          "&:hover": {
+            background: "linear-gradient(135deg, #0f172a 0%, #2563eb 100%)",
+          },
+        }}
       >
         {loading ? "Loading..." : "Login"}
-      </button>
-    </form>
+      </Button>
+    </Box>
   );
 };
 

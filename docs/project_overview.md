@@ -15,7 +15,6 @@
 ### - Upload documents
 ### - Complete tasks
 ### - View onboarding progress
-
 # HR/Admin Features
 
 ### - Login

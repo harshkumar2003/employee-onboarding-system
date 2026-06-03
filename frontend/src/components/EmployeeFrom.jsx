@@ -1,4 +1,16 @@
 import { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  IconButton,
+  Stack,
+  TextField,
+  Typography,
+  Box,
+} from "@mui/material";
+import { X } from "lucide-react";
 
 const EmployeeForm = ({ onClose, onAddEmployee }) => {
   const [formData, setFormData] = useState({
@@ -11,6 +23,7 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -24,6 +37,7 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
 
   const validation = () => {
     const newErrors = {};
+
     if (!formData.fullName.trim()) {
       newErrors.fullName = "Full Name is required";
     } else if (formData.fullName.length < 3) {
@@ -45,12 +59,13 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
     } else if (!/^\d{10}$/.test(formData.phone)) {
       newErrors.phone = "Phone number must be 10 digits";
     }
+
     const today = new Date().toISOString().split("T")[0];
 
     if (!formData.dateOfJoining) {
-      errors.dateOfJoining = "Joining date is required";
+      newErrors.dateOfJoining = "Joining date is required";
     } else if (formData.dateOfJoining < today) {
-      errors.dateOfJoining = "Joining date cannot be in the past";
+      newErrors.dateOfJoining = "Joining date cannot be in the past";
     }
 
     return newErrors;
@@ -60,10 +75,12 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
     e.preventDefault();
 
     const validationErrors = validation();
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
+
     const newEmployee = {
       id: Date.now(),
       ...formData,
@@ -74,139 +91,166 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
     onClose();
   };
 
-  return(
-    <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
-      <div className="bg-white w-[500px] rounded-lg p-6 shadow-lg">
-
-        <div className="flex justify-between items-center mb-5">
-          <h2 className="text-xl font-bold">
+  return (
+    <Dialog
+      open
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      PaperProps={{
+        sx: {
+          borderRadius: 4,
+          overflow: "hidden",
+          boxShadow: "0 24px 80px rgba(15, 23, 42, 0.18)",
+        },
+      }}
+    >
+      <Box
+        sx={{
+          px: 3,
+          py: 2.25,
+          background: "linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%)",
+          color: "common.white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box>
+          <Typography variant="overline" sx={{ letterSpacing: 1.2, opacity: 0.85 }}>
+            New Onboardee
+          </Typography>
+          <Typography variant="h5" fontWeight={800} sx={{ lineHeight: 1.1 }}>
             Add Employee
-          </h2>
+          </Typography>
+        </Box>
 
-          <button
-            onClick={onClose}
-            className="text-xl"
-          >
-            ✕
-          </button>
-        </div>
-
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4"
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            color: "common.white",
+            bgcolor: "rgba(255,255,255,0.12)",
+            "&:hover": { bgcolor: "rgba(255,255,255,0.2)" },
+          }}
         >
-          {/* Full Name */}
-          <div>
-            <label className="block mb-1">
-              Full Name
-            </label>
+          <X />
+        </IconButton>
+      </Box>
 
-            <input
-              type="text"
+      <DialogContent sx={{ px: 3, pt: 3 }}>
+        <Stack component="form" onSubmit={handleSubmit} spacing={2.25}>
+          <Stack spacing={0.75}>
+            <Typography variant="body2" fontWeight={600}>
+              Full Name
+            </Typography>
+            <TextField
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
               required
-              minLength={3}
-              className="w-full border rounded p-2"
+              fullWidth
+              error={Boolean(errors.fullName)}
+              helperText={errors.fullName || " "}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 3,
+                  backgroundColor: "#f8fafc",
+                },
+              }}
             />
+          </Stack>
 
-            {errors.fullName && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.fullName}
-              </p>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block mb-1">
+          <Stack spacing={0.75}>
+            <Typography variant="body2" fontWeight={600}>
               Email
-            </label>
-
-            <input
-              type="email"
+            </Typography>
+            <TextField
               name="email"
+              type="email"
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full border rounded p-2"
+              fullWidth
+              error={Boolean(errors.email)}
+              helperText={errors.email || " "}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 3,
+                  backgroundColor: "#f8fafc",
+                },
+              }}
             />
+          </Stack>
 
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email}
-              </p>
-            )}
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="block mb-1">
+          <Stack spacing={0.75}>
+            <Typography variant="body2" fontWeight={600}>
               Phone Number
-            </label>
-
-            <input
-              type="tel"
+            </Typography>
+            <TextField
               name="phone"
+              type="tel"
               value={formData.phone}
               onChange={handleChange}
               required
-              maxLength={10}
-              pattern="[0-9]{10}"
-              className="w-full border rounded p-2"
+              fullWidth
+              inputProps={{ maxLength: 10, pattern: "[0-9]{10}" }}
+              error={Boolean(errors.phone)}
+              helperText={errors.phone || " "}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 3,
+                  backgroundColor: "#f8fafc",
+                },
+              }}
             />
+          </Stack>
 
-            {errors.phone && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.phone}
-              </p>
-            )}
-          </div>
-
-          {/* Joining Date */}
-          <div>
-            <label className="block mb-1">
+          <Stack spacing={0.75}>
+            <Typography variant="body2" fontWeight={600}>
               Date of Joining
-            </label>
-
-            <input
-              type="date"
+            </Typography>
+            <TextField
               name="dateOfJoining"
+              type="date"
               value={formData.dateOfJoining}
               onChange={handleChange}
               required
-              min={new Date().toISOString().split("T")[0]}
-              className="w-full border rounded p-2"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              inputProps={{ min: new Date().toISOString().split("T")[0] }}
+              error={Boolean(errors.dateOfJoining)}
+              helperText={errors.dateOfJoining || " "}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 3,
+                  backgroundColor: "#f8fafc",
+                },
+              }}
             />
+          </Stack>
 
-            {errors.dateOfJoining && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.dateOfJoining}
-              </p>
-            )}
-          </div>
-
-          <div className="flex justify-end gap-3 pt-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="border px-4 py-2 rounded"
-            >
+          <DialogActions sx={{ px: 0, pt: 1.75, pb: 1 }}>
+            <Button onClick={onClose} variant="outlined" color="inherit" sx={{ borderRadius: 3, textTransform: "none", px: 2.5 }}>
               Cancel
-            </button>
-
-            <button
+            </Button>
+            <Button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded"
+              variant="contained"
+              sx={{
+                borderRadius: 3,
+                textTransform: "none",
+                px: 2.75,
+                background: "linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%)",
+              }}
             >
               Add Employee
-            </button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  );    
+            </Button>
+          </DialogActions>
+        </Stack>
+      </DialogContent>
+    </Dialog>
+  );
 };
+
 export default EmployeeForm;
