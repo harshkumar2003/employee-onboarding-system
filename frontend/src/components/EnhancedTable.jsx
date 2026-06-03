@@ -37,7 +37,7 @@ const EnhancedTable = ({
         overflowY: maxHeight ? "auto" : "visible",
       }}
     >
-      <Table stickyHeader size="small" sx={{ minWidth: 900 }}>
+      <Table stickyHeader size="small" sx={{width: "100%",tableLayout: "fixed",}}>
         {children}
       </Table>
     </TableContainer>
@@ -112,7 +112,7 @@ const EnhancedTable = ({
 
   const EnhancedTablePagination = () =>
     records.length > 0 ? (
-      <Box sx={{ borderTop: "1px solid rgba(148, 163, 184, 0.2)" }}>
+      <Box sx={{ borderTop: "1px solid rgba(148, 163, 184, 0.2)", display:"flex",justifyContent:"center" }}>
         <TablePagination
           component="div"
           page={page}

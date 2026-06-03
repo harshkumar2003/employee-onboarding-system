@@ -91,6 +91,7 @@ const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
             border: "1px solid rgba(255,255,255,0.1)",
           }}
         />
+
       </Stack>
 
       <List sx={{ flex: 1, px: 1.5, py: 2 }}>
@@ -107,13 +108,10 @@ const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
               sx={{
                 mb: 1,
                 borderRadius: 3,
-                color: "rgba(226, 232, 240, 0.86)",
-                px: 1.75,
-                py: 1.25,
+                color: "rgba(226, 232, 240, 0.85)",
                 "&.active": {
-                  bgcolor: "rgba(37, 99, 235, 0.14)",
+                  bgcolor: "#122143",
                   color: "common.white",
-                  boxShadow: "inset 0 0 0 1px rgba(96, 165, 250, 0.18)",
                 },
                 "&:hover": {
                   bgcolor: "rgba(148, 163, 184, 0.12)",
@@ -135,9 +133,9 @@ const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
 
       <Divider sx={{ borderColor: "rgba(148, 163, 184, 0.2)" }} />
 
-      <Box sx={{ p: 2.25 }}>
+      <Box sx={{ p: 2 }}>
         <Stack direction="row" spacing={1.5} alignItems="center">
-          <Avatar sx={{ bgcolor: "#2563eb", fontWeight: 700, boxShadow: "0 8px 18px rgba(37, 99, 235, 0.3)" }}>
+          <Avatar sx={{ width: 38, height: 38, bgcolor: "#2563eb", fontWeight: 700, boxShadow: "0 8px 18px rgba(37, 99, 235, 0.3)" }}>
             {username.charAt(0)}
           </Avatar>
 

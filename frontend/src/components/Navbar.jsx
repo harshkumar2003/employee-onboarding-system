@@ -1,4 +1,4 @@
-import { AppBar, Box, Chip, IconButton, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { Menu, Bell } from "lucide-react";
 
 const Navbar = ({ onMenuClick }) => {
@@ -27,7 +27,7 @@ const Navbar = ({ onMenuClick }) => {
             </IconButton>
           )}
           <Box>
-            <Typography variant="h6" component="h1" fontWeight={800} sx={{ lineHeight: 1.1 }}>
+            <Typography variant="h6" component="h1" fontWeight={600}>
               HR Dashboard
             </Typography>
             <Typography variant="caption" color="text.secondary">
@@ -37,15 +37,7 @@ const Navbar = ({ onMenuClick }) => {
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={1.5}>
-          <Chip
-            label="Live"
-            size="small"
-            sx={{
-              bgcolor: "rgba(16, 185, 129, 0.12)",
-              color: "#047857",
-              fontWeight: 700,
-            }}
-          />
+          
           <IconButton
             color="inherit"
             sx={{

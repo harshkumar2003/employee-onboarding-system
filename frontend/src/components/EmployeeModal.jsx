@@ -28,8 +28,8 @@ const EmployeeModal = ({ employee, onClose }) => {
     >
       <Box
         sx={{
-          px: 3,
-          py: 2.25,
+          px: 2.5,
+          py: 1.75,
           background: "linear-gradient(135deg, #0f172a 0%, #2563eb 100%)",
           color: "common.white",
           display: "flex",
@@ -38,10 +38,10 @@ const EmployeeModal = ({ employee, onClose }) => {
         }}
       >
         <Box>
-          <Typography variant="overline" sx={{ letterSpacing: 1.2, opacity: 0.85 }}>
+          <Typography variant="overline" sx={{ letterSpacing: 1.1, opacity: 0.85, lineHeight: 1.2 }}>
             Employee Profile
           </Typography>
-          <Typography variant="h5" fontWeight={800} sx={{ lineHeight: 1.1 }}>
+          <Typography variant="h6" fontWeight={800} sx={{ lineHeight: 1.1 }}>
             Employee Details
           </Typography>
         </Box>
@@ -59,13 +59,13 @@ const EmployeeModal = ({ employee, onClose }) => {
         </IconButton>
       </Box>
 
-      <DialogContent sx={{ px: 3, py: 3 }}>
-        <Stack spacing={2.25}>
+      <DialogContent sx={{ px: 2.5, py: 2.5 }}>
+        <Stack spacing={1.75}>
           <Stack spacing={0.5}>
             <Typography variant="caption" color="text.secondary">
               Employee ID
             </Typography>
-            <Typography variant="h6" fontWeight={600}>
+            <Typography variant="subtitle1" fontWeight={700}>
               #{employee.id}
             </Typography>
           </Stack>
@@ -74,7 +74,7 @@ const EmployeeModal = ({ employee, onClose }) => {
             <Typography variant="caption" color="text.secondary">
               Name
             </Typography>
-            <Typography variant="h6" fontWeight={600}>
+            <Typography variant="subtitle1" fontWeight={700}>
               {employee.name}
             </Typography>
           </Stack>
@@ -83,7 +83,7 @@ const EmployeeModal = ({ employee, onClose }) => {
             <Typography variant="caption" color="text.secondary">
               Joining Date
             </Typography>
-            <Typography variant="h6" fontWeight={600}>
+            <Typography variant="subtitle1" fontWeight={700}>
               {employee.joiningDate}
             </Typography>
           </Stack>

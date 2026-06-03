@@ -8,14 +8,16 @@ const Button = ({ name, className = "", onClick, type = "button", disabled = fal
       disabled={disabled}
       variant="contained"
       color="secondary"
+      size="small"
       disableElevation
       className={className}
       sx={{
-        mt: 1,
-        px: 4,
+        mt: 0.5,
+        px: 2.5,
         py: 1.25,
-        borderRadius: 3,
-        fontWeight: 600,
+        minHeight: 38,
+        borderRadius: 2.5,
+        fontWeight: 700,
         textTransform: "none",
         backgroundColor: "#0f172a",
         "&:hover": {

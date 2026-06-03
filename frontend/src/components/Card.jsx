@@ -77,7 +77,7 @@ const Card = ({ title, value, change, description }) => {
         {title}
       </Typography>
 
-      <Typography variant="body2" sx={{ mt: 0.75, color: "text.secondary", lineHeight: 1.6 }}>
+      <Typography variant="body2" sx={{ mt: 0.5, color: "text.secondary" }}>
         {description}
       </Typography>
     </Paper>

@@ -107,8 +107,8 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
     >
       <Box
         sx={{
-          px: 3,
-          py: 2.25,
+          px: 2.5,
+          py: 1.75,
           background: "linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%)",
           color: "common.white",
           display: "flex",
@@ -117,10 +117,10 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
         }}
       >
         <Box>
-          <Typography variant="overline" sx={{ letterSpacing: 1.2, opacity: 0.85 }}>
+          <Typography variant="overline" sx={{ letterSpacing: 1.1, opacity: 0.85, lineHeight: 1.2 }}>
             New Onboardee
           </Typography>
-          <Typography variant="h5" fontWeight={800} sx={{ lineHeight: 1.1 }}>
+          <Typography variant="h6" fontWeight={800} sx={{ lineHeight: 1.1 }}>
             Add Employee
           </Typography>
         </Box>
@@ -138,10 +138,10 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
         </IconButton>
       </Box>
 
-      <DialogContent sx={{ px: 3, pt: 3 }}>
-        <Stack component="form" onSubmit={handleSubmit} spacing={2.25}>
+      <DialogContent sx={{ px: 2.5, pt: 2.5 }}>
+        <Stack component="form" onSubmit={handleSubmit} spacing={1.75}>
           <Stack spacing={0.75}>
-            <Typography variant="body2" fontWeight={600}>
+            <Typography variant="body2" fontWeight={700}>
               Full Name
             </Typography>
             <TextField
@@ -154,7 +154,7 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
               helperText={errors.fullName || " "}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: 3,
+                  borderRadius: 2.5,
                   backgroundColor: "#f8fafc",
                 },
               }}
@@ -162,7 +162,7 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
           </Stack>
 
           <Stack spacing={0.75}>
-            <Typography variant="body2" fontWeight={600}>
+            <Typography variant="body2" fontWeight={700}>
               Email
             </Typography>
             <TextField
@@ -176,7 +176,7 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
               helperText={errors.email || " "}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: 3,
+                  borderRadius: 2.5,
                   backgroundColor: "#f8fafc",
                 },
               }}
@@ -184,7 +184,7 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
           </Stack>
 
           <Stack spacing={0.75}>
-            <Typography variant="body2" fontWeight={600}>
+            <Typography variant="body2" fontWeight={700}>
               Phone Number
             </Typography>
             <TextField
@@ -199,7 +199,7 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
               helperText={errors.phone || " "}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: 3,
+                  borderRadius: 2.5,
                   backgroundColor: "#f8fafc",
                 },
               }}
@@ -207,7 +207,7 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
           </Stack>
 
           <Stack spacing={0.75}>
-            <Typography variant="body2" fontWeight={600}>
+            <Typography variant="body2" fontWeight={700}>
               Date of Joining
             </Typography>
             <TextField
@@ -223,24 +223,24 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
               helperText={errors.dateOfJoining || " "}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: 3,
+                  borderRadius: 2.5,
                   backgroundColor: "#f8fafc",
                 },
               }}
             />
           </Stack>
 
-          <DialogActions sx={{ px: 0, pt: 1.75, pb: 1 }}>
-            <Button onClick={onClose} variant="outlined" color="inherit" sx={{ borderRadius: 3, textTransform: "none", px: 2.5 }}>
+          <DialogActions sx={{ px: 0, pt: 1.25, pb: 0.5 }}>
+            <Button onClick={onClose} variant="outlined" color="inherit" sx={{ borderRadius: 2.5, textTransform: "none", px: 2.25 }}>
               Cancel
             </Button>
             <Button
               type="submit"
               variant="contained"
               sx={{
-                borderRadius: 3,
+                borderRadius: 2.5,
                 textTransform: "none",
-                px: 2.75,
+                px: 2.5,
                 background: "linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%)",
               }}
             >

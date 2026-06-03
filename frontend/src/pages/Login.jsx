@@ -46,8 +46,8 @@ const Login = () => {
         sx={{
           position: "relative",
           overflow: "hidden",
-          px: { xs: 3, md: 8 },
-          py: { xs: 4, md: 5 },
+          px: { xs: 2.5, md: 6 },
+          py: { xs: 3, md: 4 },
           display: "flex",
           flexDirection: "column",
           justifyContent: { xs: "center", md: "flex-start" },
@@ -91,9 +91,9 @@ const Login = () => {
             alignSelf: "center",
             position: "relative",
             zIndex: 1,
-            display: { xs: "none", md: "inline-flex" },
-            mb: 2,
-            px: 0.5,
+          display: { xs: "none", md: "inline-flex" },
+          mb: 2,
+          px: 0.5,
             bgcolor: "rgba(255,255,255,0.1)",
             color: "#dbeafe",
             border: "1px solid rgba(255,255,255,0.16)",
@@ -109,41 +109,41 @@ const Login = () => {
           sx={{
             position: "relative",
             zIndex: 1,
-            width: { xs: 190, md: 180 },
+            width: { xs: 170, md: 150 },
             alignSelf: "center",
             objectFit: "contain",
           }}
         />
 
-        <Box sx={{ position: "relative", zIndex: 1, mt: { md: 9 }, display: { xs: "none", md: "block" } }}>
-          <Typography variant="h2" sx={{ mt: 2, fontWeight: 800, lineHeight: 1.05, letterSpacing: -1 }}>
+        <Box sx={{ position: "relative", zIndex: 1, mt: { md: 7 }, display: { xs: "none", md: "block" } }}>
+          <Typography variant="h3" sx={{ mt: 2, fontWeight: 800, lineHeight: 1.05, letterSpacing: -0.9 }}>
             Simplify Onboarding.
           </Typography>
-          <Typography variant="h2" sx={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: -1 }}>
+          <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: -0.9 }}>
             <Box component="span" sx={{ color: "#67e8f9" }}>
               Empower
             </Box>{" "}
             <Box component="span">People.</Box>
           </Typography>
 
-          <Typography variant="h6" sx={{ mt: 3, maxWidth: 480, color: "rgba(219, 234, 254, 0.92)", lineHeight: 1.75, fontWeight: 400 }}>
+          <Typography variant="body1" sx={{ mt: 2.5, maxWidth: 440, color: "rgba(219, 234, 254, 0.92)", lineHeight: 1.7, fontWeight: 400 }}>
             Build a smooth first-day experience with clear steps, faster approvals, and better visibility for every new hire.
           </Typography>
 
           <Box
-            sx={{
-              mt: 4.5,
-              display: "grid",
-              maxWidth: 480,
-              gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-              gap: 2,
-            }}
-          >
+          sx={{
+            mt: 4,
+            display: "grid",
+            maxWidth: 440,
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            gap: 1.5,
+          }}
+        >
             <Paper
               elevation={0}
               sx={{
-                p: 2,
-                borderRadius: 4,
+                p: 1.75,
+                borderRadius: 3.5,
                 bgcolor: "rgba(255,255,255,0.1)",
                 border: "1px solid rgba(255,255,255,0.18)",
                 backdropFilter: "blur(10px)",
@@ -161,8 +161,8 @@ const Login = () => {
             <Paper
               elevation={0}
               sx={{
-                p: 2,
-                borderRadius: 4,
+                p: 1.75,
+                borderRadius: 3.5,
                 bgcolor: "rgba(255,255,255,0.1)",
                 border: "1px solid rgba(255,255,255,0.18)",
                 backdropFilter: "blur(10px)",
@@ -182,11 +182,11 @@ const Login = () => {
       </Box>
 
       <Box
-        sx={{
+          sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          px: { xs: 2.5, md: 6, lg: 8 },
+          px: { xs: 2, md: 4, lg: 6 },
           py: 4,
         }}
       >
@@ -194,13 +194,13 @@ const Login = () => {
           elevation={2}
           sx={{
             width: "100%",
-            maxWidth: 480,
-            p: { xs: 3, md: 4.5 },
+            maxWidth: 420,
+            p: { xs: 2.5, md: 3.5 },
             borderRadius: 5,
             border: "1px solid",
             borderColor: "rgba(148, 163, 184, 0.24)",
             bgcolor: "common.white",
-            boxShadow: "0 24px 80px rgba(15, 23, 42, 0.12)",
+            boxShadow: "0 20px 60px rgba(15, 23, 42, 0.12)",
           }}
         >
           <LoginForm
