@@ -301,20 +301,7 @@ Stores policy acceptance records.
 
 ---
 
-## notifications
 
-Stores employee notifications.
-
-| Column      | Type      |
-| ----------- | --------- |
-| id          | UUID      |
-| employee_id | UUID      |
-| title       | VARCHAR   |
-| message     | TEXT      |
-| is_read     | BOOLEAN   |
-| created_at  | TIMESTAMP |
-
----
 
 # Entity Relationship
 
@@ -330,8 +317,6 @@ users
             ├──── bank_details
             │
             ├──── policy_acceptance
-            │
-            └──── notifications
 ```
 
 ---
@@ -368,14 +353,6 @@ Backend:
 Database:
 
 * PostgreSQL
-
-Authentication:
-
-* Microsoft Entra ID (MSAL)
-
-File Storage:
-
-* Azure Blob Storage
 
 Primary Key Strategy:
 
