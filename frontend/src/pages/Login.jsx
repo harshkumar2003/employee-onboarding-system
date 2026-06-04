@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { Box, Paper, Typography, Chip } from "@mui/material";
 import LoginForm from "../components/LoginForm";
+import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,11 +32,15 @@ const Login = () => {
       setLoading(true);
       setError("");
 
-      const data = await loginUser();
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard");
+      const data = await loginUser(email, password);
+      login(data, rememberMe);
+      navigate("/dashboard", { replace: true });
     } catch (err) {
-      setError("Invalid credentials");
+      setError(
+        err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          "Invalid credentials"
+      );
     } finally {
       setLoading(false);
     }
@@ -206,8 +219,10 @@ const Login = () => {
           <LoginForm
             email={email}
             password={password}
+            rememberMe={rememberMe}
             setEmail={setEmail}
             setPassword={setPassword}
+            setRememberMe={setRememberMe}
             handleLogin={handleLogin}
             loading={loading}
             error={error}

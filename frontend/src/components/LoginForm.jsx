@@ -15,8 +15,10 @@ import { Mail, Lock } from "lucide-react";
 const LoginForm = ({
   email,
   password,
+  rememberMe,
   setEmail,
   setPassword,
+  setRememberMe,
   handleLogin,
   loading,
   error,

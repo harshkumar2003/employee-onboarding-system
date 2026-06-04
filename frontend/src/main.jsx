@@ -1,8 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import App from "./App.jsx";
-import "./index.css";
+import { AuthProvider } from "./context/AuthContext";
 
 const theme = createTheme({
   palette: {
@@ -23,9 +21,8 @@ const theme = createTheme({
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <AuthProvider>
       <App />
-    </ThemeProvider>
-  </BrowserRouter>
-);
+    </AuthProvider>
+  </BrowserRouter>,
+)
