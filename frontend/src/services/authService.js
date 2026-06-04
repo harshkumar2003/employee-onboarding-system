@@ -1,11 +1,13 @@
 import axios from "axios";
 
-export const loginUser = async (email , password) =>{
-  const response = await axios.post("https://reqres.in/api/login",
+export const loginUser = async ( ) =>{
+  const response = await axios.post("https://dummyjson.com/auth/login",
     {
-      email,
-      password
+      username: "emilys",
+      password: "emilyspass",
     }
+    
+    
   )
   return response.data;
 }

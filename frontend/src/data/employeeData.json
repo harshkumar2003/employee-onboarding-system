@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "fullName": "Aarav Sharma",
+    "email": "aarav.sharma@company.com",
+    "phone": "9876543210",
+    "dateOfJoining": "2026-05-12",
+    "status": "Not Started"
+  },
+  {
+    "id": 2,
+    "fullName": "Priya Verma",
+    "email": "priya.verma@company.com",
+    "phone": "9876543211",
+    "dateOfJoining": "2026-05-15",
+    "status": "In Progress"
+  },
+  {
+    "id": 3,
+    "fullName": "Rohan Gupta",
+    "email": "rohan.gupta@company.com",
+    "phone": "9876543212",
+    "dateOfJoining": "2026-05-18",
+    "status": "Completed"
+  },
+  {
+    "id": 4,
+    "fullName": "Sneha Kapoor",
+    "email": "sneha.kapoor@company.com",
+    "phone": "9876543213",
+    "dateOfJoining": "2026-05-20",
+    "status": "In Progress"
+  },
+  {
+    "id": 5,
+    "fullName": "Aditya Singh",
+    "email": "aditya.singh@company.com",
+    "phone": "9876543214",
+    "dateOfJoining": "2026-05-22",
+    "status": "Not Started"
+  },
+  {
+    "id": 6,
+    "fullName": "Neha Joshi",
+    "email": "neha.joshi@company.com",
+    "phone": "9876543215",
+    "dateOfJoining": "2026-05-25",
+    "status": "Completed"
+  },
+  {
+    "id": 7,
+    "fullName": "Karan Malhotra",
+    "email": "karan.malhotra@company.com",
+    "phone": "9876543216",
+    "dateOfJoining": "2026-05-26",
+    "status": "In Progress"
+  },
+  {
+    "id": 8,
+    "fullName": "Ananya Mehta",
+    "email": "ananya.mehta@company.com",
+    "phone": "9876543217",
+    "dateOfJoining": "2026-05-27",
+    "status": "Completed"
+  }
+]
