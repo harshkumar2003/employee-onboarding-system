@@ -9,6 +9,7 @@ import com.onboarding.system.models.RefreshToken;
 import com.onboarding.system.models.User;
 import com.onboarding.system.repositories.RefreshTokenRepository;
 import com.onboarding.system.repositories.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ public class AuthService
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtService jwtService;
 
+    @Transactional
     public LoginResponse login(LoginRequest request)
     {
         authenticationManager.authenticate(
@@ -44,7 +46,8 @@ public class AuthService
 
         String refreshTokenValue =
                 UUID.randomUUID().toString();
-
+        refreshTokenRepository.deleteByUser(user);
+        refreshTokenRepository.flush();
         RefreshToken refreshToken =
                 new RefreshToken();
 
@@ -55,7 +58,6 @@ public class AuthService
         refreshToken.setExpiryDate(
                 LocalDateTime.now().plusDays(7)
         );
-
         refreshTokenRepository.save(refreshToken);
 
         return new LoginResponse(

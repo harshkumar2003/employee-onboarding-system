@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/employee_onboarding
     username: harsh
-    password: admin123
+    password: harsh123
 
   jpa:
     hibernate:

@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 const LoginForm = ({
   email,
   password,
+  rememberMe,
   setEmail,
   setPassword,
+  setRememberMe,
   handleLogin,
   loading,
   error,
@@ -57,7 +59,13 @@ const LoginForm = ({
 
       <div className="flex items-center justify-between text-sm">
         <div className="flex items-center gap-2 text-slate-600">
-          <input type="checkbox" id="remember" className="h-4 w-4 rounded border-gray-300" />
+          <input
+            type="checkbox"
+            id="remember"
+            className="h-4 w-4 rounded border-gray-300"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          />
           <label htmlFor="remember">Remember me</label>
         </div>
         <Link className="font-medium text-blue-600 hover:text-blue-700" to="/forgot">

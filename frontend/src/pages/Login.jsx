@@ -1,12 +1,23 @@
-﻿import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
+import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/authService";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,9 +32,14 @@ const Login = () => {
       setError("");
 
       const data = await loginUser(email, password);
-      console.log(data);
+      login(data, rememberMe);
+      navigate("/dashboard", { replace: true });
     } catch (err) {
-      setError("Invalid credentials");
+      setError(
+        err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          "Invalid credentials"
+      );
     } finally {
       setLoading(false);
     }
@@ -80,8 +96,10 @@ const Login = () => {
           <LoginForm
             email={email}
             password={password}
+            rememberMe={rememberMe}
             setEmail={setEmail}
             setPassword={setPassword}
+            setRememberMe={setRememberMe}
             handleLogin={handleLogin}
             loading={loading}
             error={error}
