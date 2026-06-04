@@ -1,39 +1,79 @@
-import Navbar from "../components/Navbar";
-import { useAuth } from "../context/AuthContext";
+import { Box, Paper, Stack, Typography } from "@mui/material";
+import Card from "../components/Card";
+import cardData from "../data/cardData.json";
 
 const Dashboard = () => {
-  const { auth, logout } = useAuth();
+  const name = "Harsh Kumar";
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Navbar onLogout={logout} />
-      <main className="mx-auto max-w-5xl px-6 py-10">
-        <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
-          <p className="text-sm font-medium uppercase tracking-[0.25em] text-slate-500">
-            Signed in
-          </p>
-          <h1 className="mt-3 text-3xl font-semibold text-slate-900">
-            Welcome to the HR dashboard
-          </h1>
-          <p className="mt-3 text-slate-600">
-            Your backend login is working and the access token is now stored in browser auth state.
-          </p>
-          <div className="mt-6 rounded-2xl bg-slate-900 p-4 text-sm text-slate-100">
-            <div className="font-semibold text-white">Access token</div>
-            <div className="mt-2 break-all font-mono text-xs text-slate-300">
-              {auth?.accessToken}
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={logout}
-            className="mt-6 rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
-          >
-            Logout
-          </button>
-        </div>
-      </main>
-    </div>
+    <Stack spacing={3.25}>
+      <Paper
+        elevation={0}
+        sx={{
+          borderRadius: 4,
+          p: { xs: 2.5, md: 3.25 },
+          border: "1px solid",
+          borderColor: "rgba(148, 163, 184, 0.24)",
+          bgcolor: "common.white",
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(248,250,252,0.98) 100%)",
+          boxShadow: "0 18px 46px rgba(15, 23, 42, 0.06)",
+        }}
+      >
+        <Typography variant="body2" fontWeight={700} color="primary.main" letterSpacing={1}>
+          Welcome Back
+        </Typography>
+
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{ mt: 0.75, fontWeight: 800, color: "text.primary", letterSpacing: -0.6 }}
+        >
+          Hi, {name}
+        </Typography>
+
+        <Typography variant="body2" sx={{ mt: 1 }} color="text.secondary">
+          {new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </Typography>
+
+        <Box
+          sx={{
+            mt: 2,
+            width: 92,
+            height: 5,
+            borderRadius: 999,
+            background: "linear-gradient(90deg, #1d4ed8 0%, #0ea5e9 100%)",
+          }}
+        />
+      </Paper>
+
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "repeat(2, minmax(0, 1fr))",
+            xl: "repeat(4, minmax(0, 1fr))",
+          },
+          gap: 2.25,
+        }}
+      >
+        {cardData.map((item) => (
+          <Card
+            key={item.id}
+            title={item.title}
+            value={item.value}
+            change={item.change}
+            description={item.description}
+          />
+        ))}
+      </Box>
+    </Stack>
   );
 };
 

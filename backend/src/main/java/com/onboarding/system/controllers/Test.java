@@ -1,4 +1,4 @@
-package com.onboarding.system.controller;
+package com.onboarding.system.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

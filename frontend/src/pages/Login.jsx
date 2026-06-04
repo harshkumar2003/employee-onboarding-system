@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Box, Paper, Typography, Chip } from "@mui/material";
 import LoginForm from "../components/LoginForm";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,53 +47,175 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen md:flex bg-slate-50">
-      {/* Left Side */}
-      <div className="relative overflow-hidden md:w-1/2 flex flex-col px-6 md:px-16 py-2 md:py-4   bg-transparent md:bg-gradient-to-br md:from-slate-900 md:via-blue-900 md:to-cyan-800">
-        <div className="pointer-events-none absolute -top-16 -left-10 hidden h-52 w-52 rounded-full bg-cyan-300/20 blur-3xl md:block" />
-        <div className="pointer-events-none absolute bottom-10 right-8 hidden h-72 w-72 rounded-full bg-blue-200/15 blur-3xl md:block" />
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "grid",
+        gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+        bgcolor: "#f8fafc",
+      }}
+    >
+      <Box
+        sx={{
+          position: "relative",
+          overflow: "hidden",
+          px: { xs: 2.5, md: 6 },
+          py: { xs: 3, md: 4 },
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: { xs: "center", md: "flex-start" },
+          background: {
+            xs: "transparent",
+            md: "linear-gradient(135deg, #0b1120 0%, #122b69 52%, #0f766e 100%)",
+          },
+          color: "common.white",
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: -64,
+            left: -40,
+            display: { xs: "none", md: "block" },
+            width: 208,
+            height: 208,
+            borderRadius: "50%",
+            bgcolor: "rgba(103, 232, 249, 0.16)",
+            filter: "blur(56px)",
+          }}
+        />
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 40,
+            right: 32,
+            display: { xs: "none", md: "block" },
+            width: 288,
+            height: 288,
+            borderRadius: "50%",
+            bgcolor: "rgba(191, 219, 254, 0.14)",
+            filter: "blur(56px)",
+          }}
+        />
 
-        {/* Logo visible everywhere */}
-        <div className="relative z-10 w-60 md:w-40 flex justify-center justify-self-center items-center">
-          <img src="/logo.png" alt="logo" className="h-auto w-full object-contain" />
-        </div>
+        <Chip
+          label="Employee Onboarding Platform"
+          sx={{
+            alignSelf: "center",
+            position: "relative",
+            zIndex: 1,
+          display: { xs: "none", md: "inline-flex" },
+          mb: 2,
+          px: 0.5,
+            bgcolor: "rgba(255,255,255,0.1)",
+            color: "#dbeafe",
+            border: "1px solid rgba(255,255,255,0.16)",
+            backdropFilter: "blur(10px)",
+            fontWeight: 600,
+          }}
+        />
 
-        {/* Text only on desktop */}
-        <div className="relative z-10 hidden md:block mt-20">
-          <p className="inline-flex rounded-full border border-white/30 bg-white/10 px-4 py-1 text-sm text-blue-100 backdrop-blur-sm">
-            Employee Onboarding Platform
-          </p>
+        <Box
+          component="img"
+          src="/logo.png"
+          alt="logo"
+          sx={{
+            position: "relative",
+            zIndex: 1,
+            width: { xs: 170, md: 150 },
+            alignSelf: "center",
+            objectFit: "contain",
+          }}
+        />
 
-          <h1 className="mt-6 text-5xl font-semibold text-white leading-tight">
+        <Box sx={{ position: "relative", zIndex: 1, mt: { md: 7 }, display: { xs: "none", md: "block" } }}>
+          <Typography variant="h3" sx={{ mt: 2, fontWeight: 800, lineHeight: 1.05, letterSpacing: -0.9 }}>
             Simplify Onboarding.
-          </h1>
+          </Typography>
+          <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: -0.9 }}>
+            <Box component="span" sx={{ color: "#67e8f9" }}>
+              Empower
+            </Box>{" "}
+            <Box component="span">People.</Box>
+          </Typography>
 
-          <h1 className="text-5xl font-semibold leading-tight">
-            <span className="text-cyan-300">Empower</span>{" "}
-            <span className="text-white">People.</span>
-          </h1>
+          <Typography variant="body1" sx={{ mt: 2.5, maxWidth: 440, color: "rgba(219, 234, 254, 0.92)", lineHeight: 1.7, fontWeight: 400 }}>
+            Build a smooth first-day experience with clear steps, faster approvals, and better visibility for every new hire.
+          </Typography>
 
-          <p className="mt-6 max-w-md text-blue-100/90 text-lg leading-relaxed">
-            Build a smooth first-day experience with clear steps, faster
-            approvals, and better visibility for every new hire.
-          </p>
+          <Box
+          sx={{
+            mt: 4,
+            display: "grid",
+            maxWidth: 440,
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            gap: 1.5,
+          }}
+        >
+            <Paper
+              elevation={0}
+              sx={{
+                p: 1.75,
+                borderRadius: 3.5,
+                bgcolor: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.18)",
+                backdropFilter: "blur(10px)",
+                color: "common.white",
+                boxShadow: "0 10px 30px rgba(15, 23, 42, 0.18)",
+              }}
+            >
+              <Typography variant="h4" fontWeight={700}>
+                3x
+              </Typography>
+              <Typography variant="body2" sx={{ color: "#dbeafe" }}>
+                Faster onboarding workflows
+              </Typography>
+            </Paper>
+            <Paper
+              elevation={0}
+              sx={{
+                p: 1.75,
+                borderRadius: 3.5,
+                bgcolor: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.18)",
+                backdropFilter: "blur(10px)",
+                color: "common.white",
+                boxShadow: "0 10px 30px rgba(15, 23, 42, 0.18)",
+              }}
+            >
+              <Typography variant="h4" fontWeight={700}>
+                99%
+              </Typography>
+              <Typography variant="body2" sx={{ color: "#dbeafe" }}>
+                Task completion visibility
+              </Typography>
+            </Paper>
+          </Box>
+        </Box>
+      </Box>
 
-          <div className="mt-10 grid max-w-md grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
-              <p className="text-2xl font-semibold text-white">3x</p>
-              <p className="text-sm text-blue-100/90">Faster onboarding workflows</p>
-            </div>
-            <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
-              <p className="text-2xl font-semibold text-white">99%</p>
-              <p className="text-sm text-blue-100/90">Task completion visibility</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Side */}
-      <div className="w-full md:w-1/2 flex items-center justify-center px-5  md:px-8 lg:px-12">
-        <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+      <Box
+          sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          px: { xs: 2, md: 4, lg: 6 },
+          py: 4,
+        }}
+      >
+        <Paper
+          elevation={2}
+          sx={{
+            width: "100%",
+            maxWidth: 420,
+            p: { xs: 2.5, md: 3.5 },
+            borderRadius: 5,
+            border: "1px solid",
+            borderColor: "rgba(148, 163, 184, 0.24)",
+            bgcolor: "common.white",
+            boxShadow: "0 20px 60px rgba(15, 23, 42, 0.12)",
+          }}
+        >
           <LoginForm
             email={email}
             password={password}
@@ -104,9 +227,9 @@ const Login = () => {
             loading={loading}
             error={error}
           />
-        </div>
-      </div>
-    </div>
+        </Paper>
+      </Box>
+    </Box>
   );
 };
 

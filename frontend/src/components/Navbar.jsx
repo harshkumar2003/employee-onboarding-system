@@ -1,24 +1,57 @@
-import { Bell } from "lucide-react";
+import { AppBar, Box, IconButton, Stack, Toolbar, Typography } from "@mui/material";
+import { Menu, Bell } from "lucide-react";
 
-const Navbar = ({ onLogout }) => {
+const Navbar = ({ onMenuClick }) => {
   return (
-    <div className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4 shadow-sm">
-      <div>
-        <h1 className="text-lg font-semibold text-slate-900">HR Dashboard</h1>
-      </div>
-      <div className="flex items-center gap-3">
-        <Bell className="text-slate-600" />
-        {onLogout ? (
-          <button
-            type="button"
-            onClick={onLogout}
-            className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+    <AppBar
+      position="sticky"
+      elevation={0}
+      color="inherit"
+      sx={{
+        borderBottom: "1px solid",
+        borderColor: "rgba(148, 163, 184, 0.22)",
+        background: "rgba(255,255,255,0.85)",
+        backdropFilter: "blur(16px)",
+      }}
+    >
+      <Toolbar sx={{ justifyContent: "space-between", minHeight: 76, px: { xs: 2, md: 3 } }}>
+        <Stack direction="row" alignItems="center" spacing={1.5}>
+          {onMenuClick && (
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={onMenuClick}
+              sx={{ display: { md: "none" } }}
+            >
+              <Menu />
+            </IconButton>
+          )}
+          <Box>
+            <Typography variant="h6" component="h1" fontWeight={600}>
+              HR Dashboard
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Manage onboarding with clarity and speed
+            </Typography>
+          </Box>
+        </Stack>
+
+        <Stack direction="row" alignItems="center" spacing={1.5}>
+          
+          <IconButton
+            color="inherit"
+            sx={{
+              bgcolor: "rgba(15, 23, 42, 0.04)",
+              border: "1px solid rgba(148, 163, 184, 0.2)",
+              "&:hover": { bgcolor: "rgba(15, 23, 42, 0.08)" },
+            }}
           >
-            Logout
-          </button>
-        ) : null}
-      </div>
-    </div>
+            <Bell />
+          </IconButton>
+        </Stack>
+
+      </Toolbar>
+    </AppBar>
   );
 };
 
