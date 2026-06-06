@@ -1,0 +1,14 @@
+package com.onboarding.system.enums;
+
+public enum EmployeeStatus
+{
+    INVITED,
+    ACCOUNT_CREATED,
+    PROFILE_PENDING,
+    PROFILE_COMPLETED,
+    DOCUMENTS_PENDING,
+    DOCUMENTS_SUBMITTED,
+    DOCUMENTS_REJECTED,
+    DOCUMENTS_APPROVED,
+    ONBOARDED
+}

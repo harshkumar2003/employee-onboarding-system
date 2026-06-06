@@ -1,11 +1,11 @@
 import { TextField, InputAdornment } from "@mui/material";
 import { Search } from "lucide-react";
 
-const SearchBar = () => {
+const SearchBar = ({value, onChange }) => {
   return (
     <TextField
       fullWidth
-      placeholder="Search employees by name, email, or status"
+      placeholder="Search employees by name, email"
       variant="outlined"
       size="small"
       InputProps={{
@@ -14,6 +14,7 @@ const SearchBar = () => {
             <Search size={18} color="#64748b" />
           </InputAdornment>
         ),
+        
       }}
       sx={{
         "& .MuiOutlinedInput-root": {
@@ -35,7 +36,8 @@ const SearchBar = () => {
           py: 1.4,
         },
       }}
-    />
+      value={value}
+      onChange={onChange}/>
   );
 };
 

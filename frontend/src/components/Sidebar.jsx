@@ -25,11 +25,13 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
-const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
+const Sidebar = ({ mobileOpen, onClose, onMenuClick, title }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const username = "Harsh Kumar";
 
   const navItems = [
@@ -40,8 +42,9 @@ const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
     { name: "Settings", path: "/dashboard/settings", Icon: Settings },
   ];
 
-  const handleLogout = () => {
-    navigate("/");
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login", { replace: true });
   };
 
   const drawerContent = (
@@ -57,21 +60,25 @@ const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
           "radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 24%), linear-gradient(180deg, #0f172a 0%, #0b1220 100%)",
       }}
     >
-      <Stack
+      <Box
         spacing={1.5}
         sx={{
-          px: 2.5,
-          py: 2.5,
           borderBottom: "1px solid",
           borderColor: "rgba(148, 163, 184, 0.16)",
         }}
       >
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Box direction="row" alignItems="center" sx={{display:"flex",
+              justifyContent:"center"}}>
           <Box
             component="img"
             src="/logo-1.png"
             alt="logo"
-            sx={{ width: 126, height: "auto", objectFit: "contain" }}
+            sx={{
+              width: 100,
+              height: "auto",
+              objectFit: "contain",
+              
+            }}
           />
 
           {!isDesktop && (
@@ -79,20 +86,8 @@ const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
               <X />
             </IconButton>
           )}
-        </Stack>
-
-        <Chip
-          label="Onboarding Hub"
-          size="small"
-          sx={{
-            width: "fit-content",
-            bgcolor: "rgba(255,255,255,0.08)",
-            color: "rgba(255,255,255,0.86)",
-            border: "1px solid rgba(255,255,255,0.1)",
-          }}
-        />
-
-      </Stack>
+        </Box>
+      </Box>
 
       <List sx={{ flex: 1, px: 1.5, py: 2 }}>
         {navItems.map((item) => {
@@ -134,32 +129,48 @@ const Sidebar = ({ mobileOpen, onClose, onMenuClick }) => {
       <Divider sx={{ borderColor: "rgba(148, 163, 184, 0.2)" }} />
 
       <Box sx={{ p: 2 }}>
-        <Stack direction="row" spacing={1.5} alignItems="center">
-          <Avatar sx={{ width: 38, height: 38, bgcolor: "#2563eb", fontWeight: 700, boxShadow: "0 8px 18px rgba(37, 99, 235, 0.3)" }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={2}
+        >
+          <Avatar
+            sx={{
+              width: 38,
+              height: 38,
+              bgcolor: "#2563eb",
+              fontWeight: 700,
+            }}
+          >
             {username.charAt(0)}
           </Avatar>
 
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ flex: 1 }}>
-            <Box>
-              <Typography variant="body2" fontWeight={700}>
-                {username}
-              </Typography>
-              <Typography variant="caption" sx={{ color: "rgba(226, 232, 240, 0.68)" }}>
-                HR Administrator
-              </Typography>
-            </Box>
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="body2" fontWeight={700}>
+              {username}
+            </Typography>
 
-            <IconButton
-              onClick={handleLogout}
-              sx={{
-                color: "#fecaca",
-                bgcolor: "rgba(248, 113, 113, 0.12)",
-                "&:hover": { bgcolor: "rgba(248, 113, 113, 0.2)" },
-              }}
+            <Typography
+              variant="caption"
+              sx={{ color: "rgba(226, 232, 240, 0.68)" }}
             >
-              <LogOut />
-            </IconButton>
-          </Stack>
+              {title}
+            </Typography>
+          </Box>
+
+          <IconButton
+            onClick={handleLogout}
+            sx={{
+              color: "#fecaca",
+              bgcolor: "rgba(248, 113, 113, 0.12)",
+              "&:hover": {
+                bgcolor: "rgba(248, 113, 113, 0.2)",
+              },
+            }}
+          >
+            <LogOut />
+          </IconButton>
         </Stack>
       </Box>
     </Box>

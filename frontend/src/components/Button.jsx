@@ -19,7 +19,7 @@ const Button = ({ name, className = "", onClick, type = "button", disabled = fal
         borderRadius: 2.5,
         fontWeight: 700,
         textTransform: "none",
-        backgroundColor: "#0f172a",
+        backgroundColor: "blue",
         "&:hover": {
           backgroundColor: "#1e293b",
         },

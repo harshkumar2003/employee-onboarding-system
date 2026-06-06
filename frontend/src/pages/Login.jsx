@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Box, Paper, Typography, Chip } from "@mui/material";
+﻿import { useEffect, useState } from "react";
+import { Box, Paper, Typography } from "@mui/material";
 import LoginForm from "../components/LoginForm";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/authService";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const { isAuthenticated, login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
@@ -33,7 +34,9 @@ const Login = () => {
       setError("");
 
       const data = await loginUser(email, password);
+
       login(data, rememberMe);
+
       navigate("/dashboard", { replace: true });
     } catch (err) {
       setError(
@@ -50,185 +53,77 @@ const Login = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        display: "grid",
-        gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-        bgcolor: "#f8fafc",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        px: 2,
+        background:
+          "liglinear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%)",
       }}
     >
-      <Box
+      <Paper
+        elevation={0}
         sx={{
-          position: "relative",
-          overflow: "hidden",
-          px: { xs: 2.5, md: 6 },
-          py: { xs: 3, md: 4 },
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: { xs: "center", md: "flex-start" },
-          background: {
-            xs: "transparent",
-            md: "linear-gradient(135deg, #0b1120 0%, #122b69 52%, #0f766e 100%)",
-          },
-          color: "common.white",
+          width: "100%",
+          maxWidth: 450,
+          p: 5,
+          borderRadius: 4,
+          bgcolor: "rgba(255,255,255,0.96)",
+          backdropFilter: "blur(14px)",
+          border: "1px solid rgba(255,255,255,0.2)",
+          boxShadow: "0 20px 50px rgba(0,0,0,0.15)",
+          
         }}
       >
         <Box
           sx={{
-            position: "absolute",
-            top: -64,
-            left: -40,
-            display: { xs: "none", md: "block" },
-            width: 208,
-            height: 208,
-            borderRadius: "50%",
-            bgcolor: "rgba(103, 232, 249, 0.16)",
-            filter: "blur(56px)",
+            textAlign: "center",
+            mb: 4,
           }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 40,
-            right: 32,
-            display: { xs: "none", md: "block" },
-            width: 288,
-            height: 288,
-            borderRadius: "50%",
-            bgcolor: "rgba(191, 219, 254, 0.14)",
-            filter: "blur(56px)",
-          }}
-        />
-
-        <Chip
-          label="Employee Onboarding Platform"
-          sx={{
-            alignSelf: "center",
-            position: "relative",
-            zIndex: 1,
-          display: { xs: "none", md: "inline-flex" },
-          mb: 2,
-          px: 0.5,
-            bgcolor: "rgba(255,255,255,0.1)",
-            color: "#dbeafe",
-            border: "1px solid rgba(255,255,255,0.16)",
-            backdropFilter: "blur(10px)",
-            fontWeight: 600,
-          }}
-        />
-
-        <Box
-          component="img"
-          src="/logo.png"
-          alt="logo"
-          sx={{
-            position: "relative",
-            zIndex: 1,
-            width: { xs: 170, md: 150 },
-            alignSelf: "center",
-            objectFit: "contain",
-          }}
-        />
-
-        <Box sx={{ position: "relative", zIndex: 1, mt: { md: 7 }, display: { xs: "none", md: "block" } }}>
-          <Typography variant="h3" sx={{ mt: 2, fontWeight: 800, lineHeight: 1.05, letterSpacing: -0.9 }}>
-            Simplify Onboarding.
-          </Typography>
-          <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1.05, letterSpacing: -0.9 }}>
-            <Box component="span" sx={{ color: "#67e8f9" }}>
-              Empower
-            </Box>{" "}
-            <Box component="span">People.</Box>
-          </Typography>
-
-          <Typography variant="body1" sx={{ mt: 2.5, maxWidth: 440, color: "rgba(219, 234, 254, 0.92)", lineHeight: 1.7, fontWeight: 400 }}>
-            Build a smooth first-day experience with clear steps, faster approvals, and better visibility for every new hire.
-          </Typography>
-
+        >
           <Box
-          sx={{
-            mt: 4,
-            display: "grid",
-            maxWidth: 440,
-            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-            gap: 1.5,
-          }}
-        >
-            <Paper
-              elevation={0}
-              sx={{
-                p: 1.75,
-                borderRadius: 3.5,
-                bgcolor: "rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.18)",
-                backdropFilter: "blur(10px)",
-                color: "common.white",
-                boxShadow: "0 10px 30px rgba(15, 23, 42, 0.18)",
-              }}
-            >
-              <Typography variant="h4" fontWeight={700}>
-                3x
-              </Typography>
-              <Typography variant="body2" sx={{ color: "#dbeafe" }}>
-                Faster onboarding workflows
-              </Typography>
-            </Paper>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 1.75,
-                borderRadius: 3.5,
-                bgcolor: "rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.18)",
-                backdropFilter: "blur(10px)",
-                color: "common.white",
-                boxShadow: "0 10px 30px rgba(15, 23, 42, 0.18)",
-              }}
-            >
-              <Typography variant="h4" fontWeight={700}>
-                99%
-              </Typography>
-              <Typography variant="body2" sx={{ color: "#dbeafe" }}>
-                Task completion visibility
-              </Typography>
-            </Paper>
-          </Box>
-        </Box>
-      </Box>
-
-      <Box
-          sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          px: { xs: 2, md: 4, lg: 6 },
-          py: 4,
-        }}
-      >
-        <Paper
-          elevation={2}
-          sx={{
-            width: "100%",
-            maxWidth: 420,
-            p: { xs: 2.5, md: 3.5 },
-            borderRadius: 5,
-            border: "1px solid",
-            borderColor: "rgba(148, 163, 184, 0.24)",
-            bgcolor: "common.white",
-            boxShadow: "0 20px 60px rgba(15, 23, 42, 0.12)",
-          }}
-        >
-          <LoginForm
-            email={email}
-            password={password}
-            rememberMe={rememberMe}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            setRememberMe={setRememberMe}
-            handleLogin={handleLogin}
-            loading={loading}
-            error={error}
+            component="img"
+            src="/logo.png"
+            alt="logo"
+            sx={{
+              width: 300,
+              height: 60,
+              mb: 2,
+              objectFit: "contain",
+            }}
           />
-        </Paper>
-      </Box>
+
+          <Typography
+            variant="h5"
+            fontWeight={700}
+            color="#0f172a"
+          >
+            Welcome Back
+          </Typography>
+
+          <Typography
+            variant="body2"
+            sx={{
+              mt: 1,
+              color: "#64748b",
+            }}
+          >
+            Sign in to continue to your account
+          </Typography>
+        </Box>
+
+        <LoginForm
+          email={email}
+          password={password}
+          rememberMe={rememberMe}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          setRememberMe={setRememberMe}
+          handleLogin={handleLogin}
+          loading={loading}
+          error={error}
+        />
+      </Paper>
     </Box>
   );
 };

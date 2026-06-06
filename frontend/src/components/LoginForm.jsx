@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+﻿import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
   Button,
@@ -102,7 +102,13 @@ const LoginForm = ({
 
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
         <FormControlLabel
-          control={<Checkbox size="small" />}
+          control={
+            <Checkbox
+              size="small"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+          }
           label="Remember me"
           sx={{ color: "text.secondary", "& .MuiFormControlLabel-label": { fontSize: 14 } }}
         />
@@ -127,14 +133,11 @@ const LoginForm = ({
           borderRadius: 3,
           fontWeight: 700,
           textTransform: "none",
-          background: "linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%)",
           boxShadow: "0 12px 24px rgba(37, 99, 235, 0.22)",
-          "&:hover": {
-            background: "linear-gradient(135deg, #0f172a 0%, #2563eb 100%)",
-          },
+          
         }}
       >
-        {loading ? "Loading..." : "Login"}
+        {loading ? "Authenticating..." : "Login"}
       </Button>
     </Box>
   );

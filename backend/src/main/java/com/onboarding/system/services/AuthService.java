@@ -5,10 +5,13 @@ import com.onboarding.system.dtos.LoginRequest;
 import com.onboarding.system.dtos.LoginResponse;
 import com.onboarding.system.dtos.RefreshTokenRequest;
 import com.onboarding.system.dtos.RefreshTokenResponse;
+import com.onboarding.system.exception.ResourceNotFoundException;
+import com.onboarding.system.exception.UnauthorizedException;
 import com.onboarding.system.models.RefreshToken;
 import com.onboarding.system.models.User;
 import com.onboarding.system.repositories.RefreshTokenRepository;
 import com.onboarding.system.repositories.UserRepository;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,17 +32,26 @@ public class AuthService
     @Transactional
     public LoginResponse login(LoginRequest request)
     {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+        try
+        {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        }
+        catch (BadCredentialsException ex)
+        {
+            throw new UnauthorizedException(
+                    "Invalid email or password"
+            );
+        }
 
         User user = userRepository.findByEmail(
                         request.getEmail()
                 )
-                .orElseThrow();
+                .orElseThrow(()-> new ResourceNotFoundException("User Not found"));
 
         String accessToken =
                 jwtService.generateAccessToken(user);
@@ -81,14 +93,14 @@ public class AuthService
                                 ));
 
         if (refreshToken.isRevoked()) {
-            throw new RuntimeException(
+            throw new UnauthorizedException(
                     "Refresh token revoked"
             );
         }
 
         if (refreshToken.getExpiryDate()
                 .isBefore(LocalDateTime.now())) {
-            throw new RuntimeException(
+            throw new UnauthorizedException(
                     "Refresh token expired"
             );
         }
@@ -113,7 +125,7 @@ public class AuthService
                                 request.getRefreshToken()
                         )
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new ResourceNotFoundException(
                                         "Refresh token not found"
                                 ));
 

@@ -16,7 +16,7 @@ const EmployeeGrid = ({ employees }) => {
   { id: "phone", label: "Phone" },
   { id: "dateOfJoining", label: "Date Of Joining"},
   { id: "status", label: "Status"},
-  { id: "action", label: "Action",  disableSorting: true },
+  // { id: "action", label: "Action",  disableSorting: true },
 ];;
 
   const filterFn = {
@@ -59,9 +59,6 @@ const EmployeeGrid = ({ employees }) => {
                   <TableCell>{item.dateOfJoining}</TableCell>
                   <TableCell>{item.status}</TableCell>
 
-                  <TableCell>
-                    <Button name="Edit" />
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

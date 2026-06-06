@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
+import { Box, Paper, Stack, Typography, Grid } from "@mui/material";
 import Card from "../components/Card";
 import cardData from "../data/cardData.json";
 
@@ -20,14 +20,24 @@ const Dashboard = () => {
           boxShadow: "0 18px 46px rgba(15, 23, 42, 0.06)",
         }}
       >
-        <Typography variant="body2" fontWeight={700} color="primary.main" letterSpacing={1}>
+        <Typography
+          variant="body2"
+          fontWeight={700}
+          color="primary.main"
+          letterSpacing={1}
+        >
           Welcome Back
         </Typography>
 
         <Typography
           variant="h4"
           component="h1"
-          sx={{ mt: 0.75, fontWeight: 800, color: "text.primary", letterSpacing: -0.6 }}
+          sx={{
+            mt: 0.75,
+            fontWeight: 800,
+            color: "text.primary",
+            letterSpacing: -0.6,
+          }}
         >
           Hi, {name}
         </Typography>
@@ -52,27 +62,25 @@ const Dashboard = () => {
         />
       </Paper>
 
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, minmax(0, 1fr))",
-            xl: "repeat(4, minmax(0, 1fr))",
-          },
-          gap: 2.25,
-        }}
-      >
+      <Grid container spacing={3} justifyContent="center">
         {cardData.map((item) => (
-          <Card
+          <Grid
             key={item.id}
-            title={item.title}
-            value={item.value}
-            change={item.change}
-            description={item.description}
-          />
+            size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Card
+              title={item.title}
+              value={item.value}
+              change={item.change}
+              description={item.description}
+            />
+          </Grid>
         ))}
-      </Box>
+      </Grid>
     </Stack>
   );
 };

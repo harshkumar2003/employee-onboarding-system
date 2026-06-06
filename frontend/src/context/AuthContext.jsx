@@ -1,8 +1,18 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { logoutUser } from "../services/authService";
 
 const AUTH_STORAGE_KEY = "auth_state";
 
 const AuthContext = createContext(null);
+
+const clearStoredAuth = () => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.removeItem(AUTH_STORAGE_KEY);
+  window.sessionStorage.removeItem(AUTH_STORAGE_KEY);
+};
 
 const readStoredAuth = () => {
   if (typeof window === "undefined") {
@@ -29,8 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (!auth) {
-      window.localStorage.removeItem(AUTH_STORAGE_KEY);
-      window.sessionStorage.removeItem(AUTH_STORAGE_KEY);
+      clearStoredAuth();
       return;
     }
 
@@ -48,8 +57,17 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  const logout = () => {
-    setAuth(null);
+  const logout = async () => {
+    try {
+      if (auth?.refreshToken) {
+        await logoutUser(auth.refreshToken);
+      }
+    } catch {
+      // If revocation fails, still clear the local session so the user is logged out.
+    } finally {
+      clearStoredAuth();
+      setAuth(null);
+    }
   };
 
   const value = useMemo(

@@ -20,10 +20,10 @@ const Card = ({ title, value, change, description }) => {
     <Paper
       elevation={0}
       sx={{
-        width: "100%",
+        width: 280,
         px: 2.25,
         py: 2.25,
-        borderRadius: 4,
+        borderRadius: 2,
         border: "1px solid",
         borderColor: "rgba(148, 163, 184, 0.28)",
         background:
@@ -53,7 +53,7 @@ const Card = ({ title, value, change, description }) => {
           {iconMap[title]}
         </Box>
 
-        <Box
+        {/* <Box
           sx={{
             px: 1.4,
             py: 0.55,
@@ -66,7 +66,7 @@ const Card = ({ title, value, change, description }) => {
           }}
         >
           {change}
-        </Box>
+        </Box> */}
       </Stack>
 
       <Typography variant="h4" component="h1" sx={{ mt: 3, fontWeight: 800, color: colorMap[title]?.color }}>
