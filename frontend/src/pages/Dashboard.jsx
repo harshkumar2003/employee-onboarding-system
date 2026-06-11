@@ -3,7 +3,7 @@ import Card from "../components/Card";
 import cardData from "../data/cardData.json";
 
 const Dashboard = () => {
-  const name = "Harsh Kumar";
+  
 
   return (
     <Stack spacing={3.25}>

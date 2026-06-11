@@ -2,16 +2,20 @@ package com.onboarding.system.services;
 
 
 import com.onboarding.system.dtos.CreateEmployeeRequest;
+import com.onboarding.system.dtos.EmployeeResponse;
 import com.onboarding.system.dtos.SetupPasswordRequest;
+import com.onboarding.system.dtos.UserResponse;
 import com.onboarding.system.enums.EmployeeStatus;
 import com.onboarding.system.enums.Role;
 import com.onboarding.system.enums.TokenType;
+import com.onboarding.system.exception.ResourceNotFoundException;
 import com.onboarding.system.models.Employee;
 import com.onboarding.system.models.PasswordSetupToken;
 import com.onboarding.system.models.User;
 import com.onboarding.system.repositories.EmployeeRepository;
 import com.onboarding.system.repositories.PasswordSetupRepository;
 import com.onboarding.system.repositories.UserRepository;
+import com.onboarding.system.util.UserMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -30,6 +35,7 @@ public class HRService
     private final EmployeeRepository employeeRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
     @Transactional
     public void createEmployee(CreateEmployeeRequest request)
@@ -102,4 +108,19 @@ public class HRService
         employeeRepository.save(employee);
     }
 
+    public List<EmployeeResponse> getAllEmployee()
+    {
+        return employeeRepository.findAll()
+                .stream()
+                .map(userMapper::toResponse)
+                .toList();
+    }
+
+    public EmployeeResponse getEmployeeById(UUID id)
+    {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Employee Not Found"));
+
+        return userMapper.toResponse(employee);
+    }
 }

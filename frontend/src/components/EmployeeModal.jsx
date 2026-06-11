@@ -6,11 +6,25 @@ import {
   Stack,
   Typography,
   Box,
+  Divider,
 } from "@mui/material";
 import { X } from "lucide-react";
 
 const EmployeeModal = ({ employee, onClose }) => {
   if (!employee) return null;
+
+  const employeeId = employee.employee_id ?? employee.id ?? "N/A";
+  const fullName = employee.fullName ?? employee.name ?? "N/A";
+  const email = employee.email ?? "N/A";
+  const phone = employee.phone_no ?? employee.phone ?? "N/A";
+  const joiningDate = employee.joiningDate ?? employee.dateOfJoining ?? "N/A";
+  const status = employee.status ?? "N/A";
+  const active =
+    typeof employee.active === "boolean"
+      ? employee.active
+        ? "Active"
+        : "Inactive"
+      : "N/A";
 
   return (
     <Dialog
@@ -61,21 +75,34 @@ const EmployeeModal = ({ employee, onClose }) => {
 
       <DialogContent sx={{ px: 2.5, py: 2.5 }}>
         <Stack spacing={1.75}>
-          <Stack spacing={0.5}>
-            <Typography variant="caption" color="text.secondary">
-              Employee ID
-            </Typography>
-            <Typography variant="subtitle1" fontWeight={700}>
-              #{employee.id}
-            </Typography>
-          </Stack>
+          
 
           <Stack spacing={0.5}>
             <Typography variant="caption" color="text.secondary">
               Name
             </Typography>
             <Typography variant="subtitle1" fontWeight={700}>
-              {employee.name}
+              {fullName}
+            </Typography>
+          </Stack>
+
+          <Divider flexItem />
+
+          <Stack spacing={0.5}>
+            <Typography variant="caption" color="text.secondary">
+              Email
+            </Typography>
+            <Typography variant="subtitle1" fontWeight={700}>
+              {email}
+            </Typography>
+          </Stack>
+
+          <Stack spacing={0.5}>
+            <Typography variant="caption" color="text.secondary">
+              Phone
+            </Typography>
+            <Typography variant="subtitle1" fontWeight={700}>
+              {phone}
             </Typography>
           </Stack>
 
@@ -84,7 +111,7 @@ const EmployeeModal = ({ employee, onClose }) => {
               Joining Date
             </Typography>
             <Typography variant="subtitle1" fontWeight={700}>
-              {employee.joiningDate}
+              {joiningDate}
             </Typography>
           </Stack>
 
@@ -93,13 +120,29 @@ const EmployeeModal = ({ employee, onClose }) => {
               Status
             </Typography>
             <Chip
-              label={employee.status}
+              label={status}
               sx={{
                 width: "fit-content",
                 borderRadius: 999,
                 fontWeight: 700,
                 bgcolor: "rgba(37, 99, 235, 0.12)",
                 color: "#1d4ed8",
+              }}
+            />
+          </Stack>
+
+          <Stack spacing={0.5}>
+            <Typography variant="caption" color="text.secondary">
+              Account
+            </Typography>
+            <Chip
+              label={active}
+              sx={{
+                width: "fit-content",
+                borderRadius: 999,
+                fontWeight: 700,
+                bgcolor: "rgba(15, 23, 42, 0.08)",
+                color: "#0f172a",
               }}
             />
           </Stack>

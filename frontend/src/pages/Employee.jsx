@@ -1,30 +1,76 @@
-import { useState } from "react";
-import {  Grid, Paper, Typography } from "@mui/material";
-import employeeData from "../data/employeeData.json";
+import { useEffect, useState, useMemo } from "react";
+import { Grid, Paper, Typography } from "@mui/material";
 import Button from "../components/Button";
 import SearchBar from "../components/SearchBar";
 import EmployeeForm from "../components/EmployeeFrom";
 import EmployeeGrid from "../components/EmployeeGrid";
+import EmployeeModal from "../components/EmployeeModal";
+import { useAuth } from "../context/AuthContext";
+import { getUsers } from "../services/adminService";
+import { getEmployees } from "../services/hrService";
 
 const Employee = () => {
-  const [employees, setEmployees] = useState(employeeData);
+  const { role } = useAuth();
+
+  const isAdmin = role === "ADMIN";
+  const isHR = role === 'HR';
+
+  const [employees, setEmployees] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  useEffect(() => {
+  const fetchData = async () => {
+    try {
+      let data;
+
+      if (role === "ADMIN") {
+        data = await getUsers();
+      } else if (role === "HR") {
+        data = await getEmployees();
+      }
+
+      setEmployees(data ?? []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchData();
+  }, [role]);
+
+  // const handleAddEmployee = (newEmployee) => {
+  //   if(!isAdmin) return;
+  //   const updatedEmployees = [...employees, newEmployee];
+  //   setEmployees(updatedEmployees);
+  //   localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+  // };
 
   const handleAddEmployee = (newEmployee) => {
-    const updatedEmployees = [...employees, newEmployee];
-    setEmployees(updatedEmployees);
-    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+    if (!isAdmin) return;
+    setEmployees((prev) => [...prev, newEmployee]);
   };
-  const filteredEmployees = employees.filter(
-  (employee) =>
-    employee.fullName
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase()) ||
-    employee.email
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-);
+
+  const visibleEmployees = useMemo(() => {
+    const term = searchTerm.toLowerCase();
+
+    return employees.filter(
+      (employee) =>
+        employee.fullName?.toLowerCase().includes(term) ||
+        employee.email?.toLowerCase().includes(term) ||
+        employee.phone?.toLowerCase().includes(term) ||
+        employee.phone_no?.toLowerCase().includes(term)
+    );
+  }, [employees, searchTerm]);
+
+  const handleViewEmployee = (employee) => {
+    setSelectedEmployee(employee);
+  };
+
+  const handleCloseEmployeeModal = () => {
+    setSelectedEmployee(null);
+  };
 
   return (
     <Grid container spacing={3}>
@@ -70,9 +116,17 @@ const Employee = () => {
       {/* Employee Grid */}
       <Grid size={12}>
         <Paper elevation={0}>
-          <EmployeeGrid employees={filteredEmployees} />
+          <EmployeeGrid
+            employees={visibleEmployees}
+            onActionClick={isHR ? handleViewEmployee : undefined}
+          />
         </Paper>
       </Grid>
+
+      <EmployeeModal
+        employee={selectedEmployee}
+        onClose={handleCloseEmployeeModal}
+      />
 
       {isFormOpen && (
         <EmployeeForm
