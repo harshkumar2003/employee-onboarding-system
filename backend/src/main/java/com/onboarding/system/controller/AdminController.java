@@ -1,10 +1,6 @@
 package com.onboarding.system.controller;
 
-import com.onboarding.system.dtos.UpdateUserRoleRequest;
-import com.onboarding.system.dtos.UpdateUserStatusRequest;
-import com.onboarding.system.dtos.UserRequest;
-import com.onboarding.system.dtos.UserResponse;
-import com.onboarding.system.models.User;
+import com.onboarding.system.dtos.*;
 import com.onboarding.system.services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,14 +38,14 @@ public class AdminController
         return ResponseEntity.ok(adminService.getUserById(id));
     }
 
-    @PostMapping("/users/{id}/status")
+    @PutMapping("/users/{id}/status")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> updateUserStatus(@PathVariable UUID id , @RequestBody UpdateUserStatusRequest request)
     {
         return ResponseEntity.ok(adminService.updateUserStatus(id,request));
     }
 
-    @PostMapping("/users/{id}/role")
+    @PutMapping("/users/{id}/role")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> updateUserRole(@PathVariable UUID id, @RequestBody UpdateUserRoleRequest request)
     {
@@ -62,6 +58,13 @@ public class AdminController
     {
         adminService.deleteUser(id);
         return ResponseEntity.ok("User Deleted");
+    }
+
+    @GetMapping("/dashboard/stats")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<AdminDashboardResponse> getDashboardStats()
+    {
+        return ResponseEntity.ok(adminService.getDashboardStats());
     }
 
 

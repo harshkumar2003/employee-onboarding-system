@@ -1,9 +1,9 @@
 package com.onboarding.system.controller;
 
-import com.onboarding.system.dtos.CreateEmployeeRequest;
-import com.onboarding.system.dtos.EmployeeResponse;
+import com.onboarding.system.dtos.*;
 import com.onboarding.system.services.HRService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +40,26 @@ public class HRController
     public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable UUID id)
     {
         return ResponseEntity.ok(hrService.getEmployeeById(id));
+    }
+
+    @GetMapping("dashboard/stats")
+    @PreAuthorize("hasRole('HR')")
+    public ResponseEntity<HrDashboardResponse> getDashboardStats()
+    {
+        return ResponseEntity.ok(hrService.getDashboardStats());
+    }
+
+    @GetMapping("/documents/pending")
+    @PreAuthorize("hasRole('HR')")
+    public ResponseEntity<List<PendingDocumentResponse>> getPendingDocuments()
+    {
+        return ResponseEntity.ok(hrService.getPendingDocuments());
+    }
+    @PutMapping("/documents/{id}/approve")
+    @PreAuthorize("hasRole('HR')")
+    public ResponseEntity<?> approveDocuments(@PathVariable UUID id, @RequestBody ApproveDocumentsRequest request)
+    {
+        hrService.approveDocuments(id,request);
+        return ResponseEntity.ok("Document Approved");
     }
 }

@@ -56,21 +56,29 @@ export const refreshAccessToken =
     return response.data;
   };
 
-export const logoutUser =
-  async () => {
+export const logoutUser = async () => {
     try {
-      const refreshToken =
-        getRefreshToken();
+      const refreshToken = getRefreshToken();
 
-      if (refreshToken) {
-        await api.post(
-          "/auth/logout",
+      if (refreshToken) 
+      {
+        await api.post("/auth/logout",
           {
             refreshToken,
           }
         );
       }
-    } finally {
+    } 
+    finally 
+    {
       clearTokens();
     }
   };
+
+export const setupPassword = async (payload) =>
+{
+    const response = await api.post("/auth/setup-password",payload);
+    return response.data;
+}
+
+

@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface PasswordSetupRepository extends JpaRepository<PasswordSetupToken, UUID>
 {
     Optional<PasswordSetupToken> findByToken(String token);
+
 }

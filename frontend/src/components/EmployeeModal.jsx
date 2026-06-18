@@ -131,21 +131,7 @@ const EmployeeModal = ({ employee, onClose }) => {
             />
           </Stack>
 
-          <Stack spacing={0.5}>
-            <Typography variant="caption" color="text.secondary">
-              Account
-            </Typography>
-            <Chip
-              label={active}
-              sx={{
-                width: "fit-content",
-                borderRadius: 999,
-                fontWeight: 700,
-                bgcolor: "rgba(15, 23, 42, 0.08)",
-                color: "#0f172a",
-              }}
-            />
-          </Stack>
+          
         </Stack>
       </DialogContent>
     </Dialog>

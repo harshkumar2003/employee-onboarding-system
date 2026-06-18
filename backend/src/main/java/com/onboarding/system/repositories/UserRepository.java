@@ -1,5 +1,6 @@
 package com.onboarding.system.repositories;
 
+import com.onboarding.system.enums.Role;
 import com.onboarding.system.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,4 +11,5 @@ public interface UserRepository extends JpaRepository<User, UUID>
 {
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
+    long countByRole(Role role);
 }

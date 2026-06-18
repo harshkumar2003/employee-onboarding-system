@@ -71,25 +71,23 @@ const EmployeeForm = ({ onClose, onAddEmployee }) => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const validationErrors = validation();
+  const validationErrors = validation();
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
 
-    const newEmployee = {
-      id: Date.now(),
-      ...formData,
-      status: "Not started",
-    };
-
-    onAddEmployee(newEmployee);
-    onClose();
-  };
+  await onAddEmployee({
+    fullName: formData.fullName,
+    email: formData.email,
+    phoneNumber: formData.phone,
+    joiningDate: formData.dateOfJoining,
+  });
+};
 
   return (
     <Dialog

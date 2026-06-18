@@ -8,11 +8,10 @@ import {
 
 const api = axios.create({
   baseURL:
-    import.meta.env.VITE_API_BASE_URL ||
-    "http://localhost:8080/api/v1",
-  headers: {
-    "Content-Type": "application/json",
-  },
+    import.meta.env.VITE_API_BASE_URL ||"http://localhost:8080/api/v1",
+    headers: {
+        "Content-Type": "application/json",
+    },
 });
 
 api.interceptors.request.use(
@@ -49,14 +48,11 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (
-      error.response?.status !== 401 ||
-      originalRequest?._retry ||
-      originalRequest?.url?.includes("/auth/login") ||
-      originalRequest?.url?.includes("/auth/refresh") ||
-      originalRequest?.url?.includes("/auth/logout")
-    ) {
-      return Promise.reject(error);
+    if ( error.response?.status !== 401 || originalRequest?._retry || 
+        originalRequest?.url?.includes("/auth/login") || originalRequest?.url?.includes("/auth/refresh") || 
+        originalRequest?.url?.includes("/auth/logout")) 
+    {
+        return Promise.reject(error);
     }
 
     if (isRefreshing) {

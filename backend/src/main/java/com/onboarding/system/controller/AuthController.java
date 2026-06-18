@@ -1,20 +1,17 @@
 package com.onboarding.system.controller;
 
 import com.onboarding.system.dtos.*;
-import com.onboarding.system.enums.Role;
-import com.onboarding.system.models.User;
 import com.onboarding.system.repositories.UserRepository;
 import com.onboarding.system.services.AuthService;
-import com.onboarding.system.services.EmailService;
 import com.onboarding.system.services.HRService;
-import lombok.Builder;
+import com.onboarding.system.services.impl.AuthServiceImpl;
+import com.onboarding.system.services.impl.EmailServiceImpl;
+import com.onboarding.system.services.impl.HRServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -23,9 +20,7 @@ public class AuthController
 {
     private final AuthService authService;
     private final HRService hrService;
-    private final EmailService emailService;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(
@@ -65,13 +60,6 @@ public class AuthController
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/test-mail")
-    public String testMail() {
-        emailService.sendInvitationEmail(
-                "yourtestemail@gmail.com",
-                "test-token"
-        );
-        return "Mail Sent";
-    }
+
 
 }

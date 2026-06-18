@@ -1,126 +1,23 @@
 package com.onboarding.system.services;
 
+import com.onboarding.system.dtos.*;
 
-import com.onboarding.system.dtos.CreateEmployeeRequest;
-import com.onboarding.system.dtos.EmployeeResponse;
-import com.onboarding.system.dtos.SetupPasswordRequest;
-import com.onboarding.system.dtos.UserResponse;
-import com.onboarding.system.enums.EmployeeStatus;
-import com.onboarding.system.enums.Role;
-import com.onboarding.system.enums.TokenType;
-import com.onboarding.system.exception.ResourceNotFoundException;
-import com.onboarding.system.models.Employee;
-import com.onboarding.system.models.PasswordSetupToken;
-import com.onboarding.system.models.User;
-import com.onboarding.system.repositories.EmployeeRepository;
-import com.onboarding.system.repositories.PasswordSetupRepository;
-import com.onboarding.system.repositories.UserRepository;
-import com.onboarding.system.util.UserMapper;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-public class HRService
+public interface HRService
 {
-    private final PasswordSetupRepository passwordSetupRepository;
-    private final UserRepository userRepository;
-    private final EmployeeRepository employeeRepository;
-    private final EmailService emailService;
-    private final PasswordEncoder passwordEncoder;
-    private final UserMapper userMapper;
+    void createEmployee(CreateEmployeeRequest request);
 
-    @Transactional
-    public void createEmployee(CreateEmployeeRequest request)
-    {
-        User user = User.builder()
-                .email(request.getEmail())
-                .password(UUID.randomUUID().toString())
-                .role(Role.EMPLOYEE)
-                .isActive(false)
-                .build();
+    void setupPassword(SetupPasswordRequest request);
 
-        userRepository.save(user);
+    List<EmployeeResponse> getAllEmployee();
 
-        Employee employee = Employee.builder()
-                .fullName(request.getFullName())
-                .user(user)
-                .phoneNo(request.getPhoneNumber())
-                .joiningDate(request.getJoiningDate())
-                .status(EmployeeStatus.INVITED)
-                .build();
+    EmployeeResponse getEmployeeById(UUID id);
 
-        employeeRepository.save(employee);
+    HrDashboardResponse getDashboardStats();
 
-        String tokenValue = UUID.randomUUID().toString();
+    List<PendingDocumentResponse> getPendingDocuments();
 
-        PasswordSetupToken passwordSetupToken = PasswordSetupToken.builder()
-                .token(tokenValue)
-                .user(user)
-                .tokenType(TokenType.ACCOUNT_SETUP)
-                .expiresAt(LocalDateTime.now().plusDays(7))
-                .used(false)
-                .build();
-
-        passwordSetupRepository.save(passwordSetupToken);
-
-        emailService.sendInvitationEmail(user.getEmail(), tokenValue);
-    }
-
-
-    @Transactional
-    public void setupPassword(SetupPasswordRequest request)
-    {
-        PasswordSetupToken token = passwordSetupRepository.findByToken(request.getToken())
-                .orElseThrow(()-> new RuntimeException("Invalid token"));
-
-        if(token.isUsed())
-        {
-            throw new RuntimeException("Token already used");
-        }
-
-        if(token.getExpiresAt().isBefore(LocalDateTime.now()))
-        {
-            throw new RuntimeException("Token expired");
-        }
-
-        User user = token.getUser();
-
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setActive(true);
-        userRepository.save(user);
-
-        token.setUsed(true);
-        passwordSetupRepository.save(token);
-
-        Employee employee = employeeRepository.findByUser(user)
-                .orElseThrow(()->new RuntimeException("User not found"));
-
-        employee.setStatus(EmployeeStatus.ACCOUNT_CREATED);
-
-        employeeRepository.save(employee);
-    }
-
-    public List<EmployeeResponse> getAllEmployee()
-    {
-        return employeeRepository.findAll()
-                .stream()
-                .map(userMapper::toResponse)
-                .toList();
-    }
-
-    public EmployeeResponse getEmployeeById(UUID id)
-    {
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Employee Not Found"));
-
-        return userMapper.toResponse(employee);
-    }
+    void approveDocuments(UUID id, ApproveDocumentsRequest request);
 }
