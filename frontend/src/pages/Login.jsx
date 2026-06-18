@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, markAuthenticated} = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +35,7 @@ const Login = () => {
 
       const data = await loginUser(email, password);
 
-      login(data, rememberMe);
+      markAuthenticated();
 
       navigate("/dashboard", { replace: true });
     } catch (err) {

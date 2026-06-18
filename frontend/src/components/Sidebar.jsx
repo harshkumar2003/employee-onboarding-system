@@ -31,16 +31,45 @@ const Sidebar = ({ mobileOpen, onClose, onMenuClick, title }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout , role} = useAuth();
   const username = "Harsh Kumar";
 
-  const navItems = [
-    { name: "Dashboard", path: "/dashboard", Icon: LayoutDashboard },
-    { name: "Employee", path: "/dashboard/employee", Icon: Users },
-    { name: "Task", path: "/dashboard/task", Icon: ClipboardList },
-    { name: "Doc Review", path: "/dashboard/doc", Icon: ShieldCheck },
-    { name: "Settings", path: "/dashboard/settings", Icon: Settings },
-  ];
+const allNavItems = [
+  {
+    name: "Dashboard",
+    path: "/dashboard",
+    Icon: LayoutDashboard,
+    roles: ["ADMIN" , "HR" , "EMPLOYEE"],
+  },
+  {
+    name: "Employees",
+    path: "/dashboard/employee",
+    Icon: Users,
+    roles: ["ADMIN", "HR"],
+  },
+  {
+    name: "Task",
+    path: "/dashboard/task",
+    Icon: ClipboardList,
+    roles: ["EMPLOYEE"],
+  },
+  {
+    name: "Doc Review",
+    path: "/dashboard/doc",
+    Icon: ShieldCheck,
+    roles: ["HR"],
+  },
+  {
+    name: "Settings",
+    path: "/dashboard/settings",
+    Icon: Settings,
+    roles: ["ADMIN" , "HR" , "EMPLOYEE"],
+  },
+];
+
+const navItems = allNavItems.filter((item) =>
+  item.roles.includes(role)
+);
 
   const handleLogout = async () => {
     await logout();

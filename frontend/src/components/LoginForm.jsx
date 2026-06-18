@@ -101,7 +101,7 @@ const LoginForm = ({
       </Stack>
 
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
-        <FormControlLabel
+        {/* <FormControlLabel
           control={
             <Checkbox
               size="small"
@@ -111,8 +111,8 @@ const LoginForm = ({
           }
           label="Remember me"
           sx={{ color: "text.secondary", "& .MuiFormControlLabel-label": { fontSize: 14 } }}
-        />
-        <Link component={RouterLink} to="/forgot" underline="hover" sx={{ fontWeight: 600 }}>
+        /> */}
+        <Link component={RouterLink} to="/forgot" underline="hover" sx={{ fontWeight: 200 , fontSize: 12}}>
           Forgot Password?
         </Link>
       </Box>

@@ -1,4 +1,4 @@
-package com.onboarding.system.services;
+package com.onboarding.system.services.impl;
 
 import com.onboarding.system.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService
+public class CustomUserDetailsServiceImpl implements UserDetailsService
 {
     private final UserRepository userRepository;
 

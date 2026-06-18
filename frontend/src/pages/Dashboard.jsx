@@ -1,9 +1,114 @@
-import { Box, Paper, Stack, Typography, Grid } from "@mui/material";
+import { Box, Paper, Stack, Typography, Grid, Chip } from "@mui/material";
 import Card from "../components/Card";
-import cardData from "../data/cardData.json";
-
+import { useAuth } from "../context/AuthContext";
+import { useState, useEffect } from "react";
+import { getHrDashboardStats } from "../services/hrService";
+import { getAdminDashboardStats } from "../services/adminService";
+import { getEmployeeDashboardStats } from "../services/employeeService";
+import { ClipboardList, FileText } from "lucide-react";
+import EmployeeCard from "../components/EmployeeCard";
 const Dashboard = () => {
-  const name = "Harsh Kumar";
+  const { role } = useAuth();
+  const [cards, setCards] = useState([]);
+  const [pendingActions, setPendingActions] = useState([]);
+  const [documentStatus, setDocumentStatus] = useState([]);
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        if (role === "HR") {
+          const data = await getHrDashboardStats();
+
+          setCards([
+            {
+              id: 1,
+              title: "Total Employees",
+              value: data.totalEmployees,
+              description: "Registered employees",
+            },
+            {
+              id: 2,
+              title: "Pending Verifications",
+              value: data.pendingVerifications,
+              description: "Awaiting HR review",
+            },
+            {
+              id: 3,
+              title: "Completed Onboarding",
+              value: data.completedOnboarding,
+              description: "Successfully onboarded",
+            },
+            {
+              id: 4,
+              title: "Active Onboardees",
+              value: data.activeOnboardees,
+              description: "Currently in onboarding",
+            },
+          ]);
+        }
+
+        if (role === "ADMIN") {
+          const data = await getAdminDashboardStats();
+
+          setCards([
+            {
+              id: 1,
+              title: "Total Employees",
+              value: data.totalEmployee,
+              description: "All employees",
+            },
+            {
+              id: 2,
+              title: "Total HRs",
+              value: data.totalHR,
+              description: "Registered HR users",
+            },
+            {
+              id: 3,
+              title: "Total Admins",
+              value: data.totalAdmin,
+              description: "System administrators",
+            },
+          ]);
+        }
+        if (role == "EMPLOYEE") {
+          const data = await getEmployeeDashboardStats();
+          setCards([
+            {
+              id: 1,
+              title: "Profile Completion",
+              value: `${data.profileCompletion}%`,
+              description: "Personal details completed",
+            },
+            {
+              id: 2,
+              title: "Documents Uploaded",
+              value: `${data.documentsUpload} / 7`,
+              description: "Awaiting verification",
+            },
+            {
+              id: 3,
+              title: "Verified Documents",
+              value: data.verifiedDocuments,
+              description: "Approved by HR",
+            },
+            {
+              id: 4,
+              title: "Onboarding Tasks",
+              value: `${data.onboardingTask} / ${data.totalTask}`,
+              description: "In Progress",
+            },
+          ]);
+          setPendingActions(data.pendingActions);
+          setDocumentStatus(data.documentStatus);
+        }
+      } catch (error) {
+        console.error("Dashboard Error:", error);
+      }
+    };
+
+    loadDashboard();
+  }, [role]);
 
   return (
     <Stack spacing={3.25}>
@@ -63,7 +168,7 @@ const Dashboard = () => {
       </Paper>
 
       <Grid container spacing={3} justifyContent="center">
-        {cardData.map((item) => (
+        {cards.map((item) => (
           <Grid
             key={item.id}
             size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
@@ -75,11 +180,78 @@ const Dashboard = () => {
             <Card
               title={item.title}
               value={item.value}
-              change={item.change}
               description={item.description}
             />
           </Grid>
         ))}
+      </Grid>
+      <Grid container rowSpacing={2} spacing={2}>
+        <EmployeeCard
+          title="Pending Actions"
+          icon={<ClipboardList size={18} color="#2563eb" />}
+        >
+          {pendingActions.map((action, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                py: 1.5,
+                borderBottom:
+                  index !== pendingActions.length - 1
+                    ? "1px solid #e2e8f0"
+                    : "none",
+              }}
+            >
+              <Typography fontWeight={500}>{action.title}</Typography>
+
+              <Chip
+                label={action.status}
+                size="small"
+                color={
+                  action.status === "COMPLETED"
+                    ? "success"
+                    : action.status === "PENDING"
+                      ? "warning"
+                      : "default"
+                }
+              />
+            </Box>
+          ))}
+        </EmployeeCard>
+        <EmployeeCard
+          title="Document Status"
+          icon={<FileText size={18} color="#2563eb" />}
+        >
+          {documentStatus.map((doc, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                py: 1.5,
+                borderBottom:
+                  index !== documentStatus.length - 1
+                    ? "1px solid #e2e8f0"
+                    : "none",
+              }}
+            >
+              <Typography fontWeight={500}>{doc.documentType}</Typography>
+
+              <Chip
+                label={doc.status}
+                size="small"
+                sx={{
+                  bgcolor: doc.status === "APPROVED" ? "#dcfce7" : "#ffedd5",
+                  color: doc.status === "APPROVED" ? "#15803d" : "#ea580c",
+                  fontWeight: 600,
+                }}
+              />
+            </Box>
+          ))}
+        </EmployeeCard>
       </Grid>
     </Stack>
   );

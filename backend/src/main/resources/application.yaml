@@ -14,6 +14,8 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: Asia/Kolkata
 
   mail:
     host: smtp.gmail.com
@@ -27,6 +29,7 @@ spring:
           starttls:
             enable: true
 
+
 server:
   port: 8080
 
@@ -34,3 +37,8 @@ jwt:
   secret-key: fLOU8gCFLSwRTxKTC7SmELyh7BwKyUhFZ4DiPUdr7y6
   access-token-expiration: 900000
   refresh-token-expiration: 604800000
+
+
+gcp:
+  bucket-name: employee-onboarding-documents
+  credentials-location: gcp/cogent-spirit-499408-t0-b005b2678ab1.json

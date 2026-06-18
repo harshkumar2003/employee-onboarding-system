@@ -63,5 +63,12 @@ public class GlobalExceptionHandler
                         HttpStatus.UNAUTHORIZED.value(),
                         ex.getMessage()));
     }
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequest(BadRequestException ex)
+    {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage()));
+    }
 
 }

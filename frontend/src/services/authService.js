@@ -1,47 +1,84 @@
-import axios from "axios";
+import api from "../api/api";
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api/v1",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import {
+  setAccessToken,
+  setRefreshToken,
+  getRefreshToken,
+  clearTokens,
+} from "./tokenService";
 
-const AUTH_STORAGE_KEY = "auth_state";
-
-api.interceptors.request.use((config) => {
-  if (typeof window !== "undefined") {
-    const storedAuth =
-      window.localStorage.getItem(AUTH_STORAGE_KEY) ||
-      window.sessionStorage.getItem(AUTH_STORAGE_KEY);
-
-    if (storedAuth) {
-      try {
-        const auth = JSON.parse(storedAuth);
-
-        if (auth?.accessToken) {
-          config.headers.Authorization = `Bearer ${auth.accessToken}`;
-        }
-      } catch {
-        // Ignore malformed auth state and continue without a token.
-      }
+export const loginUser = async (
+  email,
+  password
+) => {
+  const response = await api.post(
+    "/auth/login",
+    {
+      email,
+      password,
     }
-  }
+  );
 
-  return config;
-});
+  const {
+    accessToken,
+    refreshToken,
+  } = response.data;
 
-export const loginUser = async (email, password) => {
-  const response = await api.post("/auth/login", {
-    email,
-    password,
-  });
+  setAccessToken(accessToken);
+  setRefreshToken(refreshToken);
 
   return response.data;
 };
 
-export const logoutUser = async (refreshToken) => {
-  await api.post("/auth/logout", {
-    refreshToken,
-  });
-};
+export const refreshAccessToken =
+  async () => {
+    const refreshToken =
+      getRefreshToken();
+
+    if (!refreshToken) {
+      throw new Error(
+        "No refresh token found"
+      );
+    }
+
+    const response =
+      await api.post(
+        "/auth/refresh",
+        {
+          refreshToken,
+        }
+      );
+
+    setAccessToken(
+      response.data.accessToken
+    );
+
+    return response.data;
+  };
+
+export const logoutUser = async () => {
+    try {
+      const refreshToken = getRefreshToken();
+
+      if (refreshToken) 
+      {
+        await api.post("/auth/logout",
+          {
+            refreshToken,
+          }
+        );
+      }
+    } 
+    finally 
+    {
+      clearTokens();
+    }
+  };
+
+export const setupPassword = async (payload) =>
+{
+    const response = await api.post("/auth/setup-password",payload);
+    return response.data;
+}
+
+

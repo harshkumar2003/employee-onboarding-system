@@ -8,16 +8,22 @@ import Employee from "./pages/Employee";
 import Task from "./pages/Task";
 import DocReview from "./pages/DocReview";
 import Settings from "./pages/Settings";
+import PasswoardSetup from "./pages/PasswoardSetup";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Routes>
+    
+    <>
+      <Toaster position="top-right" />
+      <Routes>
       <Route
         path="/"
         element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />}
       />
+      <Route path="/setup-password" element={<PasswoardSetup />}/>
       <Route path="/login" element={<Login />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<DashboardLayout/>}>
@@ -33,6 +39,7 @@ const App = () => {
         element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />}
       />
     </Routes>
+    </>
   );
 };
 
